@@ -1,4 +1,4 @@
-# 테니스 매핑 플랫폼 - TennisWork
+# 테니스 매칭 플랫폼 - TennisWork
 
 ### "테니스를 시간, 장소에 구애받지 않고 하고 싶을때"
 
@@ -51,7 +51,7 @@
 <br>
 
 ## 💾 ERD 설계
-![ERD 구조](https://user-images.githubusercontent.com/68101836/234878330-ddce7284-c3c0-45aa-8ef2-608bb6091228.png)
+![ERD 구조](https://user-images.githubusercontent.com/68101836/234907996-e7c4e7dd-3b24-4aac-bab1-875cb18eb846.png)
 
 <br>
 
