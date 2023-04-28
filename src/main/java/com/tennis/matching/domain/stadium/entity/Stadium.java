@@ -1,6 +1,7 @@
 package com.tennis.matching.domain.stadium.entity;
 
 import com.tennis.matching.domain.base.BaseTimeEntity;
+import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -42,5 +43,13 @@ public class Stadium extends BaseTimeEntity {
         this.rental = rental;
         this.address = address;
         this.likeCount = 0L;
+    }
+
+    public void update(StadiumUpdateRequest stadiumUpdateRequest) {
+        this.name = stadiumUpdateRequest.getName();
+        this.content = stadiumUpdateRequest.getContent();
+        this.parking = stadiumUpdateRequest.getParking();
+        this.rental = stadiumUpdateRequest.getRental();
+        this.address = stadiumUpdateRequest.getAddress();
     }
 }

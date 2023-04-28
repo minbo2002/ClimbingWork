@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
-public class StadiumCreateRequest {
+public class StadiumUpdateRequest {
 
     @NotBlank(message = "경기장 이름을 입력하세요")
     private String name;
@@ -23,7 +23,7 @@ public class StadiumCreateRequest {
     private String address;
 
     @Builder
-    public StadiumCreateRequest(String name, String content, Boolean parking, Boolean rental, String address) {
+    public StadiumUpdateRequest(String name, String content, Boolean parking, Boolean rental, String address) {
         this.name = name;
         this.content = content;
         this.parking = parking;

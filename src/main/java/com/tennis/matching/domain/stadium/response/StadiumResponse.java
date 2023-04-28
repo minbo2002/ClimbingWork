@@ -1,14 +1,13 @@
 package com.tennis.matching.domain.stadium.response;
 
 import com.tennis.matching.domain.stadium.entity.Stadium;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class StadiumCreateResponse {
+public class StadiumResponse {
 
     private Long createId;
     private String name;
@@ -19,7 +18,7 @@ public class StadiumCreateResponse {
     private Long likeCount;
 
     @Builder
-    public StadiumCreateResponse(Long createId, String name, String content, Boolean parking, Boolean rental, String address, Long likeCount) {
+    public StadiumResponse(Long createId, String name, String content, Boolean parking, Boolean rental, String address, Long likeCount) {
         this.createId = createId;
         this.name = name;
         this.content = content;
@@ -29,9 +28,9 @@ public class StadiumCreateResponse {
         this.likeCount = likeCount;
     }
 
-    static public StadiumCreateResponse mapToDto(Stadium stadium) {  // static == static protected (암묵적)
+    static public StadiumResponse mapToDto(Stadium stadium) {  // static == static protected (암묵적)
 
-        return StadiumCreateResponse.builder()
+        return StadiumResponse.builder()
                 .createId(stadium.getId())
                 .name(stadium.getName())
                 .content(stadium.getContent())
