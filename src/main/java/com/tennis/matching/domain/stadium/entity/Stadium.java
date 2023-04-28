@@ -20,8 +20,8 @@ public class Stadium extends BaseTimeEntity {
     private Long id;
 
     private String name;
-    @Lob
 
+    @Lob
     private String content;
 
     private Boolean parking;
