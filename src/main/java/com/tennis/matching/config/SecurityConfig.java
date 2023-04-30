@@ -48,7 +48,13 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/member/hello", "/member/authenticate", "/member/signup").permitAll()  // 로그인API, 회원가입API는 토큰이 없는 상태에서 진행하므로 permitAll
+                .antMatchers(
+                        "/member/hello",
+                        "/member/authenticate",
+                        "/member/signup",
+                        "/like/**"
+                )
+                .permitAll()  // 로그인API, 회원가입API는 토큰이 없는 상태에서 진행하므로 permitAll
                 .anyRequest().authenticated()
 
                 // JwtFilter 클래스를 SecurityConfig 클래스에 적용하기 위해 만든
