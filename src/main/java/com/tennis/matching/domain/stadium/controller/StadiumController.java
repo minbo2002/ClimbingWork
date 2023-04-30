@@ -1,11 +1,15 @@
 package com.tennis.matching.domain.stadium.controller;
 
+import com.tennis.matching.domain.stadium.dto.StadiumSearchRequest;
 import com.tennis.matching.domain.stadium.request.StadiumCreateRequest;
 import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
 import com.tennis.matching.domain.stadium.response.StadiumResponse;
 import com.tennis.matching.domain.stadium.service.StadiumService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +34,21 @@ public class StadiumController {
     }
 
     // 경기장 전체조회
-    @GetMapping("/stadiums")
-    public ResponseEntity<List<StadiumResponse>> getAll() {
+//    @GetMapping("/stadiums")
+//    public ResponseEntity<List<StadiumResponse>> getAll() {
+//
+//        return ResponseEntity.ok(stadiumService.getAll());
+//    }
 
-        return ResponseEntity.ok(stadiumService.getAll());
+    @GetMapping("/stadiums")
+    public ResponseEntity<?> getList(
+                                     @PageableDefault(page = 0, size = 10) Pageable pageable,
+                                     @Valid StadiumSearchRequest searchRequest
+                                     ) {
+        log.info("stadium controller stadiumList ");
+        log.info("searchRequest: {}", searchRequest);
+        Page<StadiumResponse> stadiumResponsePage = stadiumService.getList(pageable, searchRequest);
+        return ResponseEntity.ok(stadiumResponsePage);
     }
 
     // 경기장 상세조회
