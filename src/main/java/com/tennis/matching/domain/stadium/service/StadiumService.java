@@ -1,6 +1,6 @@
 package com.tennis.matching.domain.stadium.service;
 
-import com.tennis.matching.domain.stadium.dto.StadiumSearchRequest;
+import com.tennis.matching.domain.stadium.request.StadiumSearchRequest;
 import com.tennis.matching.domain.stadium.request.StadiumCreateRequest;
 import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
 import com.tennis.matching.domain.stadium.response.StadiumResponse;

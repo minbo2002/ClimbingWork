@@ -47,13 +47,14 @@ public class Member {
 
     @Builder
     public Member(
-            Long id,
-            String username,
-            String password,
-            String nickname,
-            boolean activated,
-            Set<Authority> authorities
-    ) {
+                   Long id,
+                   String username,
+                   String password,
+                   String nickname,
+                   boolean activated,
+                   Set<Authority> authorities
+                 ) {
+
         this.id = id;
         this.username = username;
         this.password = password;

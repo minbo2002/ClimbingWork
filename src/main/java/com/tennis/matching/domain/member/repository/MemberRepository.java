@@ -1,4 +1,4 @@
-package com.tennis.matching.repository.member;
+package com.tennis.matching.domain.member.repository;
 
 import com.tennis.matching.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

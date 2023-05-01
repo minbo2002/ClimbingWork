@@ -2,12 +2,12 @@ package com.tennis.matching.domain.stadium.service;
 
 import com.tennis.matching.common.exception.CustomException;
 import com.tennis.matching.common.exception.ErrorCode;
-import com.tennis.matching.domain.stadium.dto.StadiumSearchRequest;
+import com.tennis.matching.domain.stadium.request.StadiumSearchRequest;
 import com.tennis.matching.domain.stadium.entity.Stadium;
 import com.tennis.matching.domain.stadium.request.StadiumCreateRequest;
 import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
 import com.tennis.matching.domain.stadium.response.StadiumResponse;
-import com.tennis.matching.repository.stadium.StadiumRepository;
+import com.tennis.matching.domain.stadium.repository.StadiumRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

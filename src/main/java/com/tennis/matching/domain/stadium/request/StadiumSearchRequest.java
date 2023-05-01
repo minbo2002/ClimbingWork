@@ -1,4 +1,4 @@
-package com.tennis.matching.domain.stadium.dto;
+package com.tennis.matching.domain.stadium.request;
 
 import lombok.Getter;
 import lombok.Setter;

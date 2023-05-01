@@ -1,6 +1,6 @@
-package com.tennis.matching.repository.stadium;
+package com.tennis.matching.domain.stadium.repository;
 
-import com.tennis.matching.domain.stadium.dto.StadiumSearchRequest;
+import com.tennis.matching.domain.stadium.request.StadiumSearchRequest;
 import com.tennis.matching.domain.stadium.entity.Stadium;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
