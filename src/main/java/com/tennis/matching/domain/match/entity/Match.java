@@ -3,16 +3,15 @@ package com.tennis.matching.domain.match.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tennis.matching.domain.base.BaseTimeEntity;
 import com.tennis.matching.domain.stadium.entity.Stadium;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @ToString
 @Table(name = "matches")
 public class Match extends BaseTimeEntity {
@@ -30,11 +29,11 @@ public class Match extends BaseTimeEntity {
     private Integer matchNum; // 경기인원(2, 4)
 
     @Column(name = "applicant_num")
-    private Integer applicantNum;
+    private Integer applicantNum;  // 신청인원
 
-    private MatchStatus status; // MALE, FEMALE, ALL
+    private MatchStatus status; // OPEN, CLOSE
 
-    private MatchGender gender; // OPEN, CLOSE
+    private MatchGender matchGender; // MALE, FEMALE, ALL
 
     @Lob
     private String content;
@@ -42,24 +41,18 @@ public class Match extends BaseTimeEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startAt;
 
-    public Match(
-                  Long id,
-                  Stadium stadium,
-                  Integer matchNum,
-                  Integer applicantNum,
-                  MatchStatus status,
-                  MatchGender gender,
-                  String content,
-                  LocalDateTime startAt
-                ) {
+    private Integer matchDay;
 
+    @Builder
+    public Match(Long id, Stadium stadium, Integer matchNum, Integer applicantNum, MatchStatus status, MatchGender matchGender, String content, LocalDateTime startAt, Integer matchDay) {
         this.id = id;
         this.stadium = stadium;
         this.matchNum = matchNum;
         this.applicantNum = applicantNum;
         this.status = status;
-        this.gender = gender;
+        this.matchGender = matchGender;
         this.content = content;
         this.startAt = startAt;
+        this.matchDay = matchDay;
     }
 }

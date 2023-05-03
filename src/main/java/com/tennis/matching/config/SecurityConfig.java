@@ -52,7 +52,8 @@ public class SecurityConfig {
                         "/member/hello",
                         "/member/authenticate",
                         "/member/signup",
-                        "/like/**"
+                        "/like/**",
+                        "/matches/**"
                 )
                 .permitAll()  // 로그인API, 회원가입API는 토큰이 없는 상태에서 진행하므로 permitAll
                 .anyRequest().authenticated()
