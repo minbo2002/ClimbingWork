@@ -1,14 +1,17 @@
 package com.tennis.matching.domain.stadium.request;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Data
+@NoArgsConstructor
 public class StadiumSearchRequest {
 
     private String name;
     private String content;
+
+    @Builder
+    public StadiumSearchRequest(String name, String content) {
+        this.name = name;
+        this.content = content;
+    }
 }

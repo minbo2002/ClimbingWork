@@ -7,6 +7,7 @@ import com.tennis.matching.domain.match.entity.MatchGender;
 import com.tennis.matching.domain.match.entity.MatchStatus;
 import com.tennis.matching.domain.match.repository.MatchRepository;
 import com.tennis.matching.domain.match.request.MatchCreateRequest;
+import com.tennis.matching.domain.match.request.MatchUpdateRequest;
 import com.tennis.matching.domain.match.response.MatchResponse;
 import com.tennis.matching.domain.stadium.entity.Stadium;
 import com.tennis.matching.domain.stadium.repository.StadiumRepository;
@@ -38,6 +39,29 @@ public class MatchServiceImpl implements MatchService {
         return matchResponse;
     }
 
+    // Match 수정
+    @Transactional
+    @Override
+    public void update(Long matchId, MatchUpdateRequest matchUpdateRequest) {
+        log.info("updateMatch() run");
+
+        Match match = findMatch(matchId);
+        log.info("findMatch: {}", match);
+        Stadium stadium = findStadium(matchUpdateRequest.getStadiumId());
+        log.info("findStadium: {}", stadium);
+        match.update(stadium, matchUpdateRequest);
+    }
+
+    // Match 삭제
+    @Transactional
+    @Override
+    public void delete(Long matchId) {
+        log.info("deleteMatch() run");
+
+        Match match = findMatch(matchId);
+        matchRepository.delete(match);
+    }
+
     private Match mapToEntity(MatchCreateRequest matchCreateRequest) {
 
         Stadium stadium = findStadium(matchCreateRequest.getStadiumId());
@@ -58,5 +82,11 @@ public class MatchServiceImpl implements MatchService {
 
         return stadiumRepository.findById(stadiumId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_STADIUM));
+    }
+
+    private Match findMatch(Long matchId) {
+
+        return matchRepository.findById(matchId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MATCH));
     }
 }

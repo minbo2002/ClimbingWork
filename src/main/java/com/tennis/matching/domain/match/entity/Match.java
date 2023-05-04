@@ -2,6 +2,7 @@ package com.tennis.matching.domain.match.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tennis.matching.domain.base.BaseTimeEntity;
+import com.tennis.matching.domain.match.request.MatchUpdateRequest;
 import com.tennis.matching.domain.stadium.entity.Stadium;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,12 +27,12 @@ public class Match extends BaseTimeEntity {
     private Stadium stadium;
 
     @Column(name = "match_num")
-    private Integer matchNum; // 경기인원(2, 4)
+    private Integer matchNum; // 경기인원(2, 4 선택)
 
     @Column(name = "applicant_num")
-    private Integer applicantNum;  // 신청인원
+    private Integer applicantNum;  // 신청인원(default 0)
 
-    private MatchStatus status; // OPEN, CLOSE
+    private MatchStatus status; // OPEN, CLOSE(default OPEN)
 
     private MatchGender matchGender; // MALE, FEMALE, ALL
 
@@ -54,5 +55,13 @@ public class Match extends BaseTimeEntity {
         this.content = content;
         this.startAt = startAt;
         this.matchDay = matchDay;
+    }
+
+    public void update(Stadium stadium, MatchUpdateRequest matchUpdateRequest) {
+        this.stadium = stadium;
+        this.matchNum = matchUpdateRequest.getMatchNum();
+        this.matchGender = MatchGender.valueOf(matchUpdateRequest.getMatchGender().toUpperCase());
+        this.content = matchUpdateRequest.getContent();
+        this.startAt = matchUpdateRequest.getStartAt();
     }
 }
