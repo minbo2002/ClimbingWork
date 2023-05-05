@@ -1,6 +1,6 @@
 package com.tennis.matching.domain.stadium.controller;
 
-import com.tennis.matching.domain.stadium.dto.StadiumSearchRequest;
+import com.tennis.matching.domain.stadium.request.StadiumSearchRequest;
 import com.tennis.matching.domain.stadium.request.StadiumCreateRequest;
 import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
 import com.tennis.matching.domain.stadium.response.StadiumResponse;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Slf4j
 @RestController

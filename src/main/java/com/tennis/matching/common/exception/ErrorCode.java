@@ -16,7 +16,10 @@ public enum ErrorCode {
     NOT_FOUND_LIKE(HttpStatus.NOT_FOUND, "like를 찾을 수 없습니다."),
 
     // member
-    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다.");
+    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
+
+    // match
+    NOT_FOUND_MATCH(HttpStatus.NOT_FOUND, "매치를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;

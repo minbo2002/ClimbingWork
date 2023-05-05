@@ -1,10 +1,10 @@
-package com.tennis.matching.repository.stadium;
+package com.tennis.matching.domain.stadium.repository;
 
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.tennis.matching.domain.stadium.dto.StadiumSearchRequest;
+import com.tennis.matching.domain.stadium.request.StadiumSearchRequest;
 import com.tennis.matching.domain.stadium.entity.Stadium;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
