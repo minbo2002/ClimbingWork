@@ -7,12 +7,15 @@ import com.tennis.matching.domain.match.entity.MatchGender;
 import com.tennis.matching.domain.match.entity.MatchStatus;
 import com.tennis.matching.domain.match.repository.MatchRepository;
 import com.tennis.matching.domain.match.request.MatchCreateRequest;
+import com.tennis.matching.domain.match.request.MatchSearchRequest;
 import com.tennis.matching.domain.match.request.MatchUpdateRequest;
 import com.tennis.matching.domain.match.response.MatchResponse;
 import com.tennis.matching.domain.stadium.entity.Stadium;
 import com.tennis.matching.domain.stadium.repository.StadiumRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +40,14 @@ public class MatchServiceImpl implements MatchService {
         log.info("create matchResponse: {}", matchResponse);
 
         return matchResponse;
+    }
+
+    @Override
+    public Page<MatchResponse> getList(Pageable pageable, MatchSearchRequest searchRequest) {
+
+        Page<Match> matchList = matchRepository.findList(pageable, searchRequest);
+
+        return matchList.map(MatchResponse::mapToDto);
     }
 
     // Match 수정
