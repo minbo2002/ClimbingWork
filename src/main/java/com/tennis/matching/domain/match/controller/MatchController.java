@@ -33,7 +33,7 @@ public class MatchController {
         return new ResponseEntity<>(match, HttpStatus.CREATED);
     }
 
-    // Match 전체조회
+    // Match 전제조회(페이징, 검색)
     @GetMapping("/matches")
     public ResponseEntity<Page<MatchResponse>> getList(
                                                  @PageableDefault(page = 0, size = 10) Pageable pageable,

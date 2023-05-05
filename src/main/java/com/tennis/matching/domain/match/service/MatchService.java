@@ -12,7 +12,7 @@ public interface MatchService {
     // Match 생성
     MatchResponse createMatch(MatchCreateRequest request);
 
-    // Match 전체조회
+    // Match 전제조회(페이징, 검색)
     Page<MatchResponse> getList(Pageable pageable, MatchSearchRequest searchRequest);
 
     // Match 수정

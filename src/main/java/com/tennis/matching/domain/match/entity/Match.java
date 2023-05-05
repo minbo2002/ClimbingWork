@@ -32,8 +32,10 @@ public class Match extends BaseTimeEntity {
     @Column(name = "applicant_num")
     private Integer applicantNum;  // 신청인원(default 0)
 
+    @Enumerated(EnumType.STRING)
     private MatchStatus status; // OPEN, CLOSE(default OPEN)
 
+    @Enumerated(EnumType.STRING)
     private MatchGender matchGender; // MALE, FEMALE, ALL
 
     @Lob
@@ -64,4 +66,17 @@ public class Match extends BaseTimeEntity {
         this.content = matchUpdateRequest.getContent();
         this.startAt = matchUpdateRequest.getStartAt();
     }
+
+    public int openOrClosedMatch() {
+        return this.matchNum - this.applicantNum;
+    }
+
+    public void updateStatus() {
+        if(this.startAt.isAfter(LocalDateTime.now()) && openOrClosedMatch() > 0) {
+            this.status = MatchStatus.OPEN;
+        } else {
+            this.status = MatchStatus.CLOSE;
+        }
+    }
+
 }

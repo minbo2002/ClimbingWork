@@ -32,7 +32,7 @@ public class MatchServiceImpl implements MatchService {
     @Transactional
     @Override
     public MatchResponse createMatch(MatchCreateRequest matchCreateRequest) {
-        log.info("createMatch() run");
+        log.info("MatchServiceImpl createMatch() run");
 
         Match match = mapToEntity(matchCreateRequest);
         Match saveMatch = matchRepository.save(match);
@@ -42,10 +42,15 @@ public class MatchServiceImpl implements MatchService {
         return matchResponse;
     }
 
+    // Match 전제조회(페이징, 검색)
     @Override
     public Page<MatchResponse> getList(Pageable pageable, MatchSearchRequest searchRequest) {
+        log.info("MatchServiceImpl getList() run");
 
         Page<Match> matchList = matchRepository.findList(pageable, searchRequest);
+        for(Match match : matchList) {
+            match.updateStatus();
+        }
 
         return matchList.map(MatchResponse::mapToDto);
     }
@@ -54,12 +59,11 @@ public class MatchServiceImpl implements MatchService {
     @Transactional
     @Override
     public void update(Long matchId, MatchUpdateRequest matchUpdateRequest) {
-        log.info("updateMatch() run");
+        log.info("MatchServiceImpl update() run");
 
         Match match = findMatch(matchId);
-        log.info("findMatch: {}", match);
         Stadium stadium = findStadium(matchUpdateRequest.getStadiumId());
-        log.info("findStadium: {}", stadium);
+
         match.update(stadium, matchUpdateRequest);
     }
 
@@ -67,7 +71,7 @@ public class MatchServiceImpl implements MatchService {
     @Transactional
     @Override
     public void delete(Long matchId) {
-        log.info("deleteMatch() run");
+        log.info("MatchServiceImpl delete() run");
 
         Match match = findMatch(matchId);
         matchRepository.delete(match);

@@ -29,6 +29,69 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
 
         List<Match> matchList = queryFactory
                 .selectFrom(match)
+                .where(eqStartAt(searchRequest.getMatchDay()),
+                       eqGender(searchRequest.getGender()),
+                       eqStatus(searchRequest.getMatchStatus()),
+                       eqPersonnel(searchRequest.getPersonnel()),
+                       eqStadiumName(searchRequest.getStadiumName()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(match.startAt.asc())
+                .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(match.count())
+                .from(match)
+                .where(eqStartAt(searchRequest.getMatchDay()),
+                       eqGender(searchRequest.getGender()),
+                       eqStatus(searchRequest.getMatchStatus()),
+                       eqPersonnel(searchRequest.getPersonnel()),
+                       eqStadiumName(searchRequest.getStadiumName()));
+
+        return PageableExecutionUtils.getPage(matchList, pageable, countQuery::fetchOne);
+    }
+
+    private BooleanExpression eqStadiumName(String stadiumName) {
+        if (stadiumName == null || stadiumName.isEmpty()) {
+            return null;
+        }
+        return match.stadium.name.eq(stadiumName);
+    }
+
+    private BooleanExpression eqStartAt(LocalDate matchDay) {
+        if (matchDay == null) {
+            return null;
+        }
+        return match.matchDay.eq(matchDay.getDayOfYear());
+    }
+
+    private BooleanExpression eqGender(String gender) {
+        if (gender == null || gender.isEmpty()) {
+            return null;
+        }
+        return match.matchGender.eq(MatchGender.valueOf(gender.toUpperCase()));
+    }
+
+    private BooleanExpression eqStatus(String status) {
+        if (status == null || status.isEmpty()) {
+            return null;
+        }
+        return match.status.eq(MatchStatus.valueOf(status.toUpperCase()));
+    }
+
+    private BooleanExpression eqPersonnel(Integer personnel) {
+        if (personnel == null) {
+            return null;
+        }
+        return match.matchNum.eq(personnel);
+    }
+
+    /*
+    @Override
+    public Page<Match> findList(Pageable pageable, MatchSearchRequest searchRequest) {
+
+        List<Match> matchList = queryFactory
+                .selectFrom(match)
                 .where(getSearch(searchRequest))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -71,39 +134,5 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
         }
         return booleanBuilder;
     }
-
-    private BooleanExpression eqStadiumName(String stadiumName) {
-        if (stadiumName == null || stadiumName.isEmpty()) {
-            return null;
-        }
-        return match.stadium.name.eq(stadiumName);
-    }
-
-    private BooleanExpression eqStartAt(LocalDate matchDay) {
-        if (matchDay == null) {
-            return null;
-        }
-        return match.matchDay.eq(matchDay.getDayOfYear());
-    }
-
-    private BooleanExpression eqGender(String gender) {
-        if (gender == null || gender.isEmpty()) {
-            return null;
-        }
-        return match.matchGender.eq(MatchGender.valueOf(gender.toUpperCase()));
-    }
-
-    private BooleanExpression eqStatus(String status) {
-        if (status == null || status.isEmpty()) {
-            return null;
-        }
-        return match.status.eq(MatchStatus.valueOf(status.toUpperCase()));
-    }
-
-    private BooleanExpression eqPersonnel(Integer personnel) {
-        if (personnel == null) {
-            return null;
-        }
-        return match.matchNum.eq(personnel);
-    }
+    */
 }
