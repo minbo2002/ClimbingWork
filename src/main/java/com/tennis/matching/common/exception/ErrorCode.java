@@ -18,6 +18,9 @@ public enum ErrorCode {
     // member
     NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
 
+    // review
+    NOT_FOUND_REVIEW(HttpStatus.NOT_FOUND, "해당 리뷰를 찾을 수 없습니다"),
+
     // match
     DIFFERENCE_GENDER(HttpStatus.NOT_FOUND, "성별 허용이 다른 경기입니다"),
     CLOSE_MATCH(HttpStatus.NOT_FOUND, "이미 마감된 경기입니다."),
