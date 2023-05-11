@@ -33,6 +33,9 @@ public class Member {
     @Column(name = "nickname", length = 100)
     private String nickname;
 
+    @Column(name = "gender", length = 20)
+    private String gender;
+
     @JsonIgnore
     @Column(name = "activated", length = 50)
     private boolean activated; // 활성화 여부
@@ -51,6 +54,7 @@ public class Member {
                    String username,
                    String password,
                    String nickname,
+                   String gender,
                    boolean activated,
                    Set<Authority> authorities
                  ) {
@@ -59,6 +63,7 @@ public class Member {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+        this.gender = gender;
         this.activated = activated;
         this.authorities = authorities;
     }

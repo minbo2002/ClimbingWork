@@ -19,7 +19,9 @@ public enum ErrorCode {
     NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
 
     // match
-    NOT_FOUND_MATCH(HttpStatus.NOT_FOUND, "매치를 찾을 수 없습니다.");
+    DIFFERENCE_GENDER(HttpStatus.NOT_FOUND, "성별 허용이 다른 경기입니다"),
+    CLOSE_MATCH(HttpStatus.NOT_FOUND, "이미 마감된 경기입니다."),
+    NOT_FOUND_MATCH(HttpStatus.NOT_FOUND, "해당 경기를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String errorMessage;

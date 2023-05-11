@@ -67,6 +67,14 @@ public class Match extends BaseTimeEntity {
         this.startAt = matchUpdateRequest.getStartAt();
     }
 
+    public void increaseApplicantNum() {
+        this.applicantNum++;
+    }
+
+    public void decreaseApplicantNum() {
+        this.applicantNum--;
+    }
+
     public int openOrClosedMatch() {
         return this.matchNum - this.applicantNum;
     }

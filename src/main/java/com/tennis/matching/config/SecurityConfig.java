@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -32,30 +33,20 @@ public class SecurityConfig {
         httpSecurity
                 // token을 사용하는 방식이기 때문에 csrf를 disable
                 .csrf().disable()
-
-                // 회원로그인 검증 및 토큰발급
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin().disable()
+                .httpBasic().disable() // rest api만 고려
 
                 // Exception 핸들링할때 직접만든 커스텀클래스를 추가
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
-                // 세션을 사용하지 않기 때문에 STATELESS로 설정
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
                 .authorizeRequests()
-                .antMatchers(
-                        "/member/hello",
-                        "/member/authenticate",
-                        "/member/signup",
-                        "/like/**",
-                        "/matches/**"
-                )
-                .permitAll()  // 로그인API, 회원가입API는 토큰이 없는 상태에서 진행하므로 permitAll
                 .anyRequest().authenticated()
 
                 // JwtFilter 클래스를 SecurityConfig 클래스에 적용하기 위해 만든
@@ -71,7 +62,11 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> web.ignoring()
+                .antMatchers("/member/**")
                 .antMatchers("/stadiums/**")
+                .antMatchers("/like/**")
+                .antMatchers("/matches/**")
+                .antMatchers("/applications/**")
                 .antMatchers("/favicon.ico");
     }
 }
