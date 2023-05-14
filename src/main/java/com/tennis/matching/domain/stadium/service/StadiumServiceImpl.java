@@ -8,6 +8,7 @@ import com.tennis.matching.domain.stadium.request.StadiumCreateRequest;
 import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
 import com.tennis.matching.domain.stadium.response.StadiumResponse;
 import com.tennis.matching.domain.stadium.repository.StadiumRepository;
+import com.tennis.matching.util.image.AwsS3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class StadiumServiceImpl implements StadiumService {
 
     private final StadiumRepository stadiumRepository;
+    private final AwsS3Util awsS3Util;
 
     // Stadium 생성
     @Transactional
@@ -37,17 +39,6 @@ public class StadiumServiceImpl implements StadiumService {
         log.info("create stadiumCreateResponse: {}", stadiumResponse);
 
         return stadiumResponse;
-    }
-
-    // Stadium 전체조회
-    @Override
-    public List<StadiumResponse> getAll() {
-
-        List<Stadium> findStadiums = stadiumRepository.findAll();
-
-        return findStadiums.stream()
-                .map(StadiumResponse::mapToDto)
-                .collect(Collectors.toList());
     }
 
     // Stadium 전체조회(페이징, 검색)
@@ -76,7 +67,7 @@ public class StadiumServiceImpl implements StadiumService {
         log.info("update() run");
 
         Stadium findStadium = findStadium(stadiumId);
-
+        findStadium.updateUrl(awsS3Util.uploadFile(stadiumUpdateRequest.getChangeSingleFile()));
         findStadium.update(stadiumUpdateRequest);
     }
 
@@ -99,6 +90,8 @@ public class StadiumServiceImpl implements StadiumService {
                 .parking(stadiumCreateRequest.getParking())
                 .rental(stadiumCreateRequest.getRental())
                 .address(stadiumCreateRequest.getAddress())
+                .singleUrl(awsS3Util.uploadFile(stadiumCreateRequest.getSingleFile()))
+                .multiUrl(awsS3Util.uploadFiles(stadiumCreateRequest.getMultiFiles()))
                 .build();
     }
 

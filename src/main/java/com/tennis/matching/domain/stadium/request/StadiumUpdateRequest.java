@@ -3,6 +3,8 @@ package com.tennis.matching.domain.stadium.request;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -21,6 +23,8 @@ public class StadiumUpdateRequest {
 
     @NotBlank(message = "경기장 주소를 입력하세요")
     private String address;
+
+    private MultipartFile changeSingleFile;
 
     @Builder
     public StadiumUpdateRequest(String name, String content, Boolean parking, Boolean rental, String address) {

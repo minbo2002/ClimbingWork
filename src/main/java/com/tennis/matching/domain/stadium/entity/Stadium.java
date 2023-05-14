@@ -34,8 +34,22 @@ public class Stadium extends BaseTimeEntity {
     @Column(name ="like_count")
     private Long likeCount;
 
+    @Column(name ="single_url", length = 200)
+    private String singleUrl;
+
+    @Column(name ="multi_url", length = 200)
+    private String multiUrl;
+
     @Builder
-    public Stadium(Long id, String name, String content, Boolean parking, Boolean rental, String address, Long likeCount) {
+    public Stadium(Long id,
+                   String name,
+                   String content,
+                   Boolean parking,
+                   Boolean rental,
+                   String address,
+                   Long likeCount,
+                   String singleUrl,
+                   String multiUrl) {
         this.id = id;
         this.name = name;
         this.content = content;
@@ -43,6 +57,8 @@ public class Stadium extends BaseTimeEntity {
         this.rental = rental;
         this.address = address;
         this.likeCount = 0L;
+        this.singleUrl = singleUrl;
+        this.multiUrl = multiUrl;
     }
 
     public void update(StadiumUpdateRequest stadiumUpdateRequest) {
@@ -51,5 +67,9 @@ public class Stadium extends BaseTimeEntity {
         this.parking = stadiumUpdateRequest.getParking();
         this.rental = stadiumUpdateRequest.getRental();
         this.address = stadiumUpdateRequest.getAddress();
+    }
+
+    public void updateUrl(String singleUrl) {
+        this.singleUrl = singleUrl;
     }
 }

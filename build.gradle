@@ -55,6 +55,14 @@ dependencies {
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    // aws
+    implementation 'com.amazonaws:aws-java-sdk-core'
+    implementation 'com.amazonaws:aws-java-sdk:1.11.313'
+}
+
+jar {
+    enabled = false
 }
 
 tasks.named('test') {

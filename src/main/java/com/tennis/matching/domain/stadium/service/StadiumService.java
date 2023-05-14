@@ -14,9 +14,6 @@ public interface StadiumService {
     // Stadium 생성
     StadiumResponse createStadium(StadiumCreateRequest stadiumRequest);
 
-    // Stadium 전체조회
-    List<StadiumResponse> getAll();
-
     // Stadium 전체조회(페이징, 검색)
     Page<StadiumResponse> getList(Pageable pageable, StadiumSearchRequest searchRequest);
 

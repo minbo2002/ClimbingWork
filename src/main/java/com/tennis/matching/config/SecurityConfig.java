@@ -68,6 +68,7 @@ public class SecurityConfig {
                 .antMatchers("/matches/**")
                 .antMatchers("/applications/**")
                 .antMatchers("/reviews/**")
+                .antMatchers("/test/**")
                 .antMatchers("/favicon.ico");
     }
 }

@@ -16,9 +16,20 @@ public class StadiumResponse {
     private Boolean rental;
     private String address;
     private Long likeCount;
+    private String singleUrl;
+    private String multiUrl;
 
     @Builder
-    public StadiumResponse(Long createId, String name, String content, Boolean parking, Boolean rental, String address, Long likeCount) {
+    public StadiumResponse(Long createId,
+                           String name,
+                           String content,
+                           Boolean parking,
+                           Boolean rental,
+                           String address,
+                           Long likeCount,
+                           String singleUrl,
+                           String multiUrl) {
+
         this.createId = createId;
         this.name = name;
         this.content = content;
@@ -26,6 +37,8 @@ public class StadiumResponse {
         this.rental = rental;
         this.address = address;
         this.likeCount = likeCount;
+        this.singleUrl = singleUrl;
+        this.multiUrl = multiUrl;
     }
 
     static public StadiumResponse mapToDto(Stadium stadium) {  // static == static protected (암묵적)
@@ -38,6 +51,8 @@ public class StadiumResponse {
                 .rental(stadium.getRental())
                 .address(stadium.getAddress())
                 .likeCount(stadium.getLikeCount())
+                .singleUrl(stadium.getSingleUrl())
+                .multiUrl(stadium.getMultiUrl())
                 .build();
     }
 }

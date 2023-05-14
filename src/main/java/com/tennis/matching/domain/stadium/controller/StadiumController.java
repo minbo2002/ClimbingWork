@@ -13,8 +13,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -25,20 +27,18 @@ public class StadiumController {
 
     // 경기장 등록 (관리자만 가능)
     @PostMapping("/stadiums")
-    public ResponseEntity<StadiumResponse> createStadium(@Valid @RequestBody StadiumCreateRequest stadiumCreateRequest) {
+    public ResponseEntity<StadiumResponse> createStadium(@Valid @RequestPart(value = "values") StadiumCreateRequest stadiumCreateRequest,
+                                                         @RequestPart(value = "single", required = false) MultipartFile single,
+                                                         @RequestPart(value = "multis", required = false) List<MultipartFile> multis) {
 
+        stadiumCreateRequest.setSingleFile(single);
+        stadiumCreateRequest.setMultiFiles(multis);
         StadiumResponse stadium = stadiumService.createStadium(stadiumCreateRequest);
 
         return new ResponseEntity<>(stadium, HttpStatus.CREATED);
     }
 
     // 경기장 전체조회
-//    @GetMapping("/stadiums")
-//    public ResponseEntity<List<StadiumResponse>> getAll() {
-//
-//        return ResponseEntity.ok(stadiumService.getAll());
-//    }
-
     @GetMapping("/stadiums")
     public ResponseEntity<?> getList(
                                      @PageableDefault(page = 0, size = 10) Pageable pageable,
@@ -59,8 +59,11 @@ public class StadiumController {
 
     // 경기장 수정
     @PatchMapping("/stadiums/{stadiumId}")
-    public void update(@PathVariable Long stadiumId, @Valid @RequestBody StadiumUpdateRequest stadiumUpdateRequest) {
+    public void update(@PathVariable Long stadiumId,
+                       @Valid @RequestPart(value = "values") StadiumUpdateRequest stadiumUpdateRequest,
+                       @RequestPart(value = "single", required = false) MultipartFile single) {
 
+        stadiumUpdateRequest.setChangeSingleFile(single);
         stadiumService.update(stadiumId, stadiumUpdateRequest);
     }
 
