@@ -1,11 +1,14 @@
 package com.tennis.matching.domain.stadium.entity;
 
+import com.tennis.matching.domain.application.entity.Application;
 import com.tennis.matching.domain.base.BaseTimeEntity;
+import com.tennis.matching.domain.review.entity.Review;
 import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -39,6 +42,12 @@ public class Stadium extends BaseTimeEntity {
 
     @Column(name ="multi_url", length = 200)
     private String multiUrl;
+
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Application> applications;
+
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 
     @Builder
     public Stadium(Long id,

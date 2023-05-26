@@ -17,15 +17,23 @@ public class MemberResponse {
     private String username;
     private String password;
     private String nickname;
+    private String gender;
     private boolean activated;  // 활성화 여부
     Set<Authority> authorities; // 권한
 
     @Builder
-    public MemberResponse(Long id, String username, String password, String nickname, boolean activated, Set<Authority> authorities) {
+    public MemberResponse(Long id,
+                          String username,
+                          String password,
+                          String nickname,
+                          String gender,
+                          boolean activated,
+                          Set<Authority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+        this.gender = gender;
         this.activated = activated;
         this.authorities = authorities;
     }
@@ -37,6 +45,7 @@ public class MemberResponse {
                 .username(member.getUsername())
                 .password(member.getPassword())
                 .nickname(member.getNickname())
+                .gender(member.getGender())
                 .activated(member.isActivated())
                 .authorities(member.getAuthorities())
                 .build();
