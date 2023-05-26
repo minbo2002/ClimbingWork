@@ -26,11 +26,11 @@ public class Member {
     private String username;
 
     @JsonIgnore
-    @Column(name = "password", length = 50)
+    @Column(name = "password", length = 100)
     private String password;
 
     @JsonIgnore
-    @Column(name = "nickname", length = 100)
+    @Column(name = "nickname", length = 50)
     private String nickname;
 
     @Column(name = "gender", length = 20)

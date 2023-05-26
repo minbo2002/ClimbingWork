@@ -1,13 +1,16 @@
 package com.tennis.matching.domain.match.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tennis.matching.domain.application.entity.Application;
 import com.tennis.matching.domain.base.BaseTimeEntity;
 import com.tennis.matching.domain.match.request.MatchUpdateRequest;
+import com.tennis.matching.domain.review.entity.Review;
 import com.tennis.matching.domain.stadium.entity.Stadium;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -45,6 +48,12 @@ public class Match extends BaseTimeEntity {
     private LocalDateTime startAt;
 
     private Integer matchDay;
+
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Application> applications;
+
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 
     @Builder
     public Match(Long id, Stadium stadium, Integer matchNum, Integer applicantNum, MatchStatus status, MatchGender matchGender, String content, LocalDateTime startAt, Integer matchDay) {

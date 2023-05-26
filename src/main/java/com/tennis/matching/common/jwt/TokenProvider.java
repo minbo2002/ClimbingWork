@@ -38,7 +38,7 @@ public class TokenProvider implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        byte[] keyBytes = Decoders.BASE64.decode(secret);  // TokenProvider 클래스가 생성되고 주입받은 secret 값을 Base64 Decode해서 key변수에 할당
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -60,26 +60,27 @@ public class TokenProvider implements InitializingBean {
                 .compact();
     }
 
-    // 토큰에 담긴 정보를 이용하여 Authentication 객체를 반환하는 메서드
+    // token에 담긴 정보를 이용하여 Authentication 객체를 반환하는 메서드
     public Authentication getAuthentication(String token) {
+
         Claims claims = Jwts
                 .parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(token)
+                .parseClaimsJws(token)   // token을 파싱해서 claims를 생성
                 .getBody();
 
         Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))    // claims에서 권한정보(authorities)를 빼내서
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        User principal = new User(claims.getSubject(), "", authorities);    // 권한정보(authorities)를 이용해서 User객체(principal)를 생성
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);   //  User객체(principal), 토큰(token), 권한정보(authorities)를 이용해서 최종적으로 Authentication객체를 생성
     }
 
-    // 토큰을 파라미터로 받고 유효성검증을 진행하는 메서드
+    // token을 파라미터로 받고 유효성검증을 진행하는 메서드
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
