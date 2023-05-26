@@ -1,15 +1,17 @@
 package com.tennis.matching.domain.member.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tennis.matching.domain.member.entity.Member;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
-public class MemberSignUpRequest {
+public class MemberSearchRequest {
 
     @NotNull
     @Size(min = 3, max = 50)
@@ -28,7 +30,7 @@ public class MemberSignUpRequest {
     private String gender;
 
     @Builder
-    public MemberSignUpRequest(String username, String password, String nickname, String gender) {
+    public MemberSearchRequest(String username, String password, String nickname, String gender) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;

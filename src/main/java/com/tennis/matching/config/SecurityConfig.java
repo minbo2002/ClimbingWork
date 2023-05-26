@@ -50,9 +50,8 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/hello").permitAll()
                 .antMatchers("/api/authenticate").permitAll()  // 로그인 api는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll() 설정
-                .antMatchers("/api/signup").permitAll()        // 회원가입 api는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll() 설정
+                .antMatchers("/member/signup").permitAll()     // 회원가입 api는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll() 설정
                 .anyRequest().authenticated()
 
                 .and()
@@ -68,7 +67,6 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> web.ignoring()
-                .antMatchers("/member/**")
                 .antMatchers("/stadiums/**")
                 .antMatchers("/like/**")
                 .antMatchers("/matches/**")

@@ -1,10 +1,12 @@
 package com.tennis.matching.domain.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tennis.matching.domain.review.entity.Review;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,11 +44,14 @@ public class Member {
 
     @ManyToMany
     @JoinTable(
-            name = "user_authority",
-            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")}
-    )
+                name = "user_authority",
+                joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
+                inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")}
+               )
     private Set<Authority> authorities;
+
+    @OneToMany(mappedBy = "member")
+    private List<Review> reviews;
 
     @Builder
     public Member(
