@@ -61,10 +61,13 @@
 <br>
 
 ## ⚙️ 시스템 아키텍처
+![image](https://github.com/minbo2002/TennisWork/assets/68101836/add9c675-a9df-4575-a722-079dea9537c2)
 
 <br>
 
 ## 👁‍🗨 이슈정리
+- 유저들의 중복예약요청 및 동시성 제어는 어떻게 해야하는가?
+- 팀을 이루어 프로젝트 진행시 Git flow를 어떻게 사용해야 하는가?
 
 <br>
 
