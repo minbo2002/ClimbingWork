@@ -27,6 +27,7 @@ public class ReviewController {
         log.info("ReviewController createReview() run");
 
         Member member = (Member) authentication.getPrincipal();
+        log.info("member: {}", member);
 
         ReviewResponse review = reviewService.createReview(member, requestCreateRequest);
 
