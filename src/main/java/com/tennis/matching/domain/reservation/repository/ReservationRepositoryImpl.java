@@ -1,66 +1,66 @@
-package com.tennis.matching.domain.application.repository;
+package com.tennis.matching.domain.reservation.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.tennis.matching.domain.application.entity.Application;
-import com.tennis.matching.domain.application.entity.QApplication;
+import com.tennis.matching.domain.reservation.entity.Reservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import java.util.List;
 
-import static com.tennis.matching.domain.application.entity.QApplication.application;
+import static com.tennis.matching.domain.reservation.entity.QReservation.reservation;
 import static com.tennis.matching.domain.match.entity.QMatch.match;
 import static com.tennis.matching.domain.stadium.entity.QStadium.stadium;
 
 @RequiredArgsConstructor
-public class ApplicationRepositoryImpl implements ApplicationRepositoryCustom{
+public class ReservationRepositoryImpl implements ReservationRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Application findByMemberIdAndMatchId(Long memberId, Long matchId) {
+    public Reservation findByMemberIdAndMatchId(Long memberId, Long matchId) {
+
 
         return queryFactory
-                .selectFrom(QApplication.application)
+                .selectFrom(reservation)
                 .where(eqMemberId(memberId), eqMatchId(matchId))
                 .fetchOne();
     }
 
     @Override
-    public Page<Application> findListByMemberId(Pageable pageable, Long memberId) {
+    public Page<Reservation> findListByMemberId(Pageable pageable, Long memberId) {
 
-        List<Application> applicationList = queryFactory
-                .selectFrom(application)
+        List<Reservation> reservationList = queryFactory
+                .selectFrom(reservation)
                 .where(eqMemberId(memberId))
-                .join(application.match, match).fetchJoin()
+                .join(reservation.match, match).fetchJoin()
                 .join(match.stadium, stadium).fetchJoin()
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
-                .orderBy(application.match.startAt.desc())
+                .orderBy(reservation.match.startAt.desc())
                 .fetch();
 
         JPAQuery<Long> countQuery = queryFactory
-                .select(application.count())
-                .from(application)
+                .select(reservation.count())
+                .from(reservation)
                 .where(eqMemberId(memberId));
 
-        return PageableExecutionUtils.getPage(applicationList, pageable, countQuery::fetchOne);
+        return PageableExecutionUtils.getPage(reservationList, pageable, countQuery::fetchOne);
     }
 
     private BooleanExpression eqMemberId(Long memberId) {
         if (memberId == null) {
             return null;
         }
-        return application.member.id.eq(memberId);
+        return reservation.member.id.eq(memberId);
     }
 
     private BooleanExpression eqMatchId(Long matchId) {
         if(matchId == null) {
             return null;
         }
-        return application.match.id.eq(matchId);
+        return reservation.match.id.eq(matchId);
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static com.tennis.matching.domain.stadium.entity.QStadium.*;
+import static com.tennis.matching.domain.stadium.entity.QStadium.stadium;
 
 @RequiredArgsConstructor
 public class StadiumRepositoryCustomImpl implements StadiumRepositoryCustom {

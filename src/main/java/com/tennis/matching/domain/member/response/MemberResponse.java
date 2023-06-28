@@ -1,7 +1,5 @@
 package com.tennis.matching.domain.member.response;
 
-import com.tennis.matching.domain.application.entity.Application;
-import com.tennis.matching.domain.application.response.ApplicationResponse;
 import com.tennis.matching.domain.member.entity.Authority;
 import com.tennis.matching.domain.member.entity.Member;
 import lombok.Builder;

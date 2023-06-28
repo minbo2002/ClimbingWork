@@ -1,6 +1,5 @@
 package com.tennis.matching.domain.match.repository;
 
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -12,12 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
-
 import java.time.LocalDate;
 import java.util.List;
-
-import static com.tennis.matching.domain.match.entity.QMatch.*;
-import static com.tennis.matching.domain.stadium.entity.QStadium.*;
+import static com.tennis.matching.domain.match.entity.QMatch.match;
 
 @RequiredArgsConstructor
 public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
@@ -85,54 +81,4 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
         }
         return match.matchNum.eq(personnel);
     }
-
-    /*
-    @Override
-    public Page<Match> findList(Pageable pageable, MatchSearchRequest searchRequest) {
-
-        List<Match> matchList = queryFactory
-                .selectFrom(match)
-                .where(getSearch(searchRequest))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(match.startAt.asc())
-                .fetch();
-
-        JPAQuery<Long> countQuery = queryFactory
-                .select(match.count())
-                .from(match)
-                .where(getSearch(searchRequest));
-
-        return PageableExecutionUtils.getPage(matchList, pageable, countQuery::fetchOne);
-    }
-
-    private BooleanBuilder getSearch(MatchSearchRequest searchRequest) {
-
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-
-        LocalDate matchDay = searchRequest.getMatchDay();
-        String gender = searchRequest.getGender();
-        String matchStatus = searchRequest.getMatchStatus();
-        Integer personnel = searchRequest.getPersonnel();
-        String stadiumName = searchRequest.getStadiumName();
-
-
-        if (searchRequest.getMatchDay() != null) {
-            booleanBuilder.and(match.matchDay.eq(searchRequest.getMatchDay().getDayOfYear()));
-        }
-        if (searchRequest.getGender() != null) {
-            booleanBuilder.and(match.matchGender.eq(MatchGender.valueOf(searchRequest.getGender().toUpperCase())));
-        }
-        if (searchRequest.getMatchStatus() != null) {
-            booleanBuilder.and(match.status.eq(MatchStatus.valueOf(searchRequest.getMatchStatus().toUpperCase())));
-        }
-        if (searchRequest.getPersonnel() != null) {
-            booleanBuilder.and(match.matchNum.eq(searchRequest.getPersonnel()));
-        }
-        if (searchRequest.getStadiumName() != null) {
-            booleanBuilder.and(stadium.name.eq(searchRequest.getStadiumName()));
-        }
-        return booleanBuilder;
-    }
-    */
 }

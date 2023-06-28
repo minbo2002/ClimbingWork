@@ -1,9 +1,6 @@
 package com.tennis.matching.config;
 
-import com.tennis.matching.common.jwt.JwtAccessDeniedHandler;
-import com.tennis.matching.common.jwt.JwtAuthenticationEntryPoint;
-import com.tennis.matching.common.jwt.JwtSecurityConfig;
-import com.tennis.matching.common.jwt.TokenProvider;
+import com.tennis.matching.common.jwt.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
@@ -51,7 +49,12 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/login").permitAll()  // 로그인 api는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll() 설정
-                .antMatchers("/member/signup").permitAll()     // 회원가입 api는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll() 설정
+                .antMatchers("/member/signup").permitAll()   // 회원가입 api는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll() 설정
+                .antMatchers("/stadiums/**").permitAll()
+                .antMatchers("/like/**").permitAll()
+                .antMatchers("/matches/**").permitAll()
+                .antMatchers("/applications/**").permitAll()
+                .antMatchers("/reviews/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
@@ -67,11 +70,6 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> web.ignoring()
-                .antMatchers("/stadiums/**")
-                .antMatchers("/like/**")
-                .antMatchers("/matches/**")
-                .antMatchers("/applications/**")
-                .antMatchers("/reviews/**")
                 .antMatchers("/test/**")
                 .antMatchers("/favicon.ico");
     }

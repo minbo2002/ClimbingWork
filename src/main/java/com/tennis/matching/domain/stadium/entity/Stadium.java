@@ -1,6 +1,6 @@
 package com.tennis.matching.domain.stadium.entity;
 
-import com.tennis.matching.domain.application.entity.Application;
+import com.tennis.matching.domain.reservation.entity.Reservation;
 import com.tennis.matching.domain.base.BaseTimeEntity;
 import com.tennis.matching.domain.review.entity.Review;
 import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
@@ -44,7 +44,7 @@ public class Stadium extends BaseTimeEntity {
     private String multiUrl;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Application> applications;
+    private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;

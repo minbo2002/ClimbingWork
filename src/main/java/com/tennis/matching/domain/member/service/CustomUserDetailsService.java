@@ -1,5 +1,6 @@
 package com.tennis.matching.domain.member.service;
 
+import com.tennis.matching.common.dto.PrincipalDetails;
 import com.tennis.matching.domain.member.entity.Member;
 import com.tennis.matching.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(member.getUsername(),
                 member.getPassword(),
                 grantedAuthorities);
+//        return new PrincipalDetails(member);
     }
 }
