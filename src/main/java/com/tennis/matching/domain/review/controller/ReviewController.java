@@ -34,6 +34,13 @@ public class ReviewController {
         return new ResponseEntity<>(review, HttpStatus.CREATED);
     }
 
+    @GetMapping("/reviews")
+    public ResponseEntity<?> getReviewList() {
+        log.info("ReviewController getReviewList() run");
+
+        return new ResponseEntity<>(reviewService.getReviewList(), HttpStatus.OK);
+    }
+
     // 리뷰 삭제
     @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<?> deleteReview(@PathVariable Long reviewId) {
