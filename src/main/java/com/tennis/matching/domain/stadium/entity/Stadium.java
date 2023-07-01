@@ -1,12 +1,11 @@
 package com.tennis.matching.domain.stadium.entity;
 
-import com.tennis.matching.domain.reservation.entity.Reservation;
+import com.tennis.matching.domain.like.entity.Like;
+import com.tennis.matching.domain.match.entity.Match;
 import com.tennis.matching.domain.base.BaseTimeEntity;
-import com.tennis.matching.domain.review.entity.Review;
 import com.tennis.matching.domain.stadium.request.StadiumUpdateRequest;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -34,20 +33,17 @@ public class Stadium extends BaseTimeEntity {
 
     private String address;
 
-    @Column(name ="like_count")
-    private Long likeCount;
-
     @Column(name ="single_url", length = 200)
     private String singleUrl;
 
     @Column(name ="multi_url", length = 200)
     private String multiUrl;
 
-    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservations;
+    @OneToMany(mappedBy = "stadium", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> matches;
 
-    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews;
+    @OneToMany(mappedBy = "stadium", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes;
 
     @Builder
     public Stadium(Long id,
@@ -56,7 +52,6 @@ public class Stadium extends BaseTimeEntity {
                    Boolean parking,
                    Boolean rental,
                    String address,
-                   Long likeCount,
                    String singleUrl,
                    String multiUrl) {
         this.id = id;
@@ -65,7 +60,6 @@ public class Stadium extends BaseTimeEntity {
         this.parking = parking;
         this.rental = rental;
         this.address = address;
-        this.likeCount = 0L;
         this.singleUrl = singleUrl;
         this.multiUrl = multiUrl;
     }

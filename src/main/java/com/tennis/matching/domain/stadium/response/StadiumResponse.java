@@ -15,7 +15,7 @@ public class StadiumResponse {
     private Boolean parking;
     private Boolean rental;
     private String address;
-    private Long likeCount;
+    private Long likeCount;  // 경기장 좋아요 수
     private String singleUrl;
     private String multiUrl;
 
@@ -50,7 +50,7 @@ public class StadiumResponse {
                 .parking(stadium.getParking())
                 .rental(stadium.getRental())
                 .address(stadium.getAddress())
-                .likeCount(stadium.getLikeCount())
+                .likeCount((long) stadium.getLikes().size())
                 .singleUrl(stadium.getSingleUrl())
                 .multiUrl(stadium.getMultiUrl())
                 .build();
