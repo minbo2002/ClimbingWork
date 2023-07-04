@@ -41,11 +41,11 @@
 **Backend**
 
 <p>
-  <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=java&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=Java&logoColor=white"/>
   <img src="https://img.shields.io/badge/Spring Boot -6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/>
   <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat-square&logo=SpringSecurity&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Data JPA-6DB33F?style=flat-square&logo=&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JWT-137CBD?style=flat-square&logo=JSON%20Web%20Tokens&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Spring Data JPA-460856?style=flat-square&logo=&logoColor=white"/>
   <img src="https://img.shields.io/badge/Query DSL-0769AD?style=flat-square&logo=&logoColor=white"/>
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/>
 </p>
@@ -53,7 +53,8 @@
 **Infra**
 
 <p>
-  <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Amazon EC2-3C5280?style=flat-square&logo=amazonec2&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Amazon S3-569A31?style=flat-square&logo=amazons3&logoColor=white"/>
   <img src="https://img.shields.io/badge/Amazon RDS-232F3E?style=flat-square&logo=amazonrds&logoColor=white"/>
   <img src="https://img.shields.io/badge/Github Actions-4285F4?style=flat-square&logo=Github Actions&logoColor=white"/>
 </p>
