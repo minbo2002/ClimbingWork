@@ -5,6 +5,7 @@ import com.tennis.matching.common.exception.ErrorCode;
 import com.tennis.matching.domain.match.entity.Match;
 import com.tennis.matching.domain.match.repository.MatchRepository;
 import com.tennis.matching.domain.member.entity.Member;
+import com.tennis.matching.domain.member.repository.MemberRepository;
 import com.tennis.matching.domain.review.entity.Review;
 import com.tennis.matching.domain.review.repository.ReviewRepository;
 import com.tennis.matching.domain.review.request.ReviewCreateRequest;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -22,12 +25,16 @@ public class ReviewServiceImpl implements ReviewService{
 
     private final MatchRepository matchRepository;
     private final ReviewRepository reviewRepository;
+    private final MemberRepository memberRepository;
 
     // 리뷰 생성
     @Transactional
     @Override
-    public ReviewResponse createReview(Member member, ReviewCreateRequest reviewRequest) {
+    public ReviewResponse createReview(String username, ReviewCreateRequest reviewRequest) {
         log.info("ReviewServiceImpl createReview() run");
+
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
 
         Review review = mapToEntity(member, reviewRequest);
         Review saveReview = reviewRepository.save(review);
@@ -37,20 +44,21 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewResponse;
     }
 
-    // 리뷰 보기
+    // 리뷰 리스트
     @Override
-    public ReviewResponse getReview(Member member, Long matchId) {
+    public List<ReviewResponse> getReviewList() {
 
-        Review review = reviewRepository.findByMemberIdAndMatchId(member.getId(), matchId);
+        return reviewRepository.findAll().stream()
+                .map(ReviewResponse::mapToDto)
+                .collect(Collectors.toList());
+    }
 
-        if (review == null) {
-            Match match = findMatch(matchId);
+    // 리뷰 상세
+    @Override
+    public ReviewResponse getReview(Long reviewId) {
 
-            review = Review.builder()
-                    .member(member)
-                    .match(match)
-                    .build();
-        }
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_REVIEW));
 
         return ReviewResponse.mapToDto(review);
     }
@@ -58,10 +66,17 @@ public class ReviewServiceImpl implements ReviewService{
     // 리뷰 삭제
     @Transactional
     @Override
-    public void delete(Long reviewId) {
+    public void delete(String username, Long reviewId) {
         log.info("ReviewServiceImpl delete() run");
 
         Review review = findReview(reviewId);
+
+        log.info("username: {}", username);
+        log.info("review.getMember().getUsername(): {}", review.getMember().getUsername());
+
+        if(!review.getMember().getUsername().equals(username)) {
+            throw new CustomException(ErrorCode.NOT_MATCH_MEMBER);
+        }
 
         reviewRepository.delete(review);
     }

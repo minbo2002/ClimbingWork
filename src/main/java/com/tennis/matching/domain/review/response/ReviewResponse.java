@@ -1,7 +1,5 @@
 package com.tennis.matching.domain.review.response;
 
-import com.tennis.matching.domain.match.entity.Match;
-import com.tennis.matching.domain.member.entity.Member;
 import com.tennis.matching.domain.review.entity.Review;
 import lombok.Builder;
 import lombok.Data;
@@ -11,25 +9,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReviewResponse {
 
-    private Long createId;
-    private Member member;
-    private Match match;
+    private Long id;
+    private String memberName;
+    private Long matchId;
     private String content;
 
     @Builder
-    public ReviewResponse(Long createId, Member member, Match match, String content) {
-        this.createId = createId;
-        this.member = member;
-        this.match = match;
+    public ReviewResponse(Long id, String memberName, Long matchId, String content) {
+        this.id = id;
+        this.memberName = memberName;
+        this.matchId = matchId;
         this.content = content;
     }
 
     static public ReviewResponse mapToDto(Review review) {
 
         return ReviewResponse.builder()
-                .createId(review.getId())
-                .member(review.getMember())
-                .match(review.getMatch())
+                .id(review.getId())
+                .memberName(review.getMember().getUsername())
+                .matchId(review.getMatch().getId())
                 .content(review.getContent())
                 .build();
     }

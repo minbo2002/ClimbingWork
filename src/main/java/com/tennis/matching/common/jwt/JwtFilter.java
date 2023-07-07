@@ -20,7 +20,7 @@ public class JwtFilter extends GenericFilterBean {  // JWT 커스텀필터 클�
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    private TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
     public JwtFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
@@ -31,8 +31,13 @@ public class JwtFilter extends GenericFilterBean {  // JWT 커스텀필터 클�
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        String jwt = resolveToken(httpServletRequest);  // 1) resolveToken 메서드로 토큰을 받아오고
+        logger.info("doFilter 1) httpServletRequest: " + httpServletRequest);
+
+        String jwt = getJWTfromToken(httpServletRequest);  // 1) resolveToken 메서드로 토큰을 받아오고
+        logger.info("doFilter 3) jwt: " + jwt);
+
         String requestURI = httpServletRequest.getRequestURI();
+        logger.info("doFilter 4) requestURI: " + requestURI);
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {  // 2) 받아온 토큰을 유효성 검증을 진행
             Authentication authentication = tokenProvider.getAuthentication(jwt);  // 3) 토근이 정상이면 Authentication(User객체, 토근, 권한정보가 담긴) 객체를 받아와서
@@ -46,12 +51,24 @@ public class JwtFilter extends GenericFilterBean {  // JWT 커스텀필터 클�
     }
 
     // Request Header에서 토큰정보를 꺼내기위한 메서드
-    private String resolveToken(HttpServletRequest request) {
+    private String getJWTfromToken(HttpServletRequest request) {
+
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        logger.info("doFilter 2) bearerToken: " + bearerToken);
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+
+            return bearerToken.substring(7, bearerToken.length());
         }
+
+//        if (StringUtils.hasText(bearerToken)) {
+//            logger.info("doFilter 2) bearerToken: " + bearerToken);
+//
+//            String[] tokenParts = bearerToken.split(" ");
+//            if (tokenParts.length == 2 && tokenParts[0].equals("Bearer")) {
+//                return tokenParts[1];
+//            }
+//        }
 
         return null;
     }

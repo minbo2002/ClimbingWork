@@ -5,10 +5,8 @@ import com.tennis.matching.common.exception.ErrorCode;
 import com.tennis.matching.domain.member.entity.Authority;
 import com.tennis.matching.domain.member.entity.Member;
 import com.tennis.matching.domain.member.repository.MemberRepository;
-import com.tennis.matching.domain.member.request.MemberSearchRequest;
 import com.tennis.matching.domain.member.request.MemberSignUpRequest;
 import com.tennis.matching.domain.member.response.MemberResponse;
-import com.tennis.matching.domain.stadium.entity.Stadium;
 import com.tennis.matching.util.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,9 +47,8 @@ public class MemberServiceImpl implements MemberService {
                 .build();
 
         Member saveMember = memberRepository.save(member);
-        MemberResponse memberResponse = MemberResponse.mapToDto(saveMember);
 
-        return memberResponse;
+        return MemberResponse.mapToDto(saveMember);
     }
 
     // 특정 username을 가진 Member정보와 권한정보를 가져오는 메서드

@@ -1,4 +1,4 @@
-package com.tennis.matching.domain.application.entity;
+package com.tennis.matching.domain.reservation.entity;
 
 import com.tennis.matching.domain.match.entity.Match;
 import com.tennis.matching.domain.member.entity.Member;
@@ -11,12 +11,12 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @ToString
-@Table(name = "applications")
-public class Application {
+@Table(name = "reservations")
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "application_id")
+    @Column(name = "reservation_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,7 +28,7 @@ public class Application {
     private Match match;
 
     @Builder
-    public Application(Long id, Member member, Match match) {
+    public Reservation(Long id, Member member, Match match) {
         this.id = id;
         this.member = member;
         this.match = match;

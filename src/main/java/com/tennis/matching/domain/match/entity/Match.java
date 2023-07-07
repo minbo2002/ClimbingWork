@@ -1,7 +1,7 @@
 package com.tennis.matching.domain.match.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.tennis.matching.domain.application.entity.Application;
+import com.tennis.matching.domain.reservation.entity.Reservation;
 import com.tennis.matching.domain.base.BaseTimeEntity;
 import com.tennis.matching.domain.match.request.MatchUpdateRequest;
 import com.tennis.matching.domain.review.entity.Review;
@@ -50,7 +50,7 @@ public class Match extends BaseTimeEntity {
     private Integer matchDay;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Application> applications;
+    private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;

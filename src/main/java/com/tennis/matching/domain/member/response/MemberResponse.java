@@ -1,7 +1,5 @@
 package com.tennis.matching.domain.member.response;
 
-import com.tennis.matching.domain.application.entity.Application;
-import com.tennis.matching.domain.application.response.ApplicationResponse;
 import com.tennis.matching.domain.member.entity.Authority;
 import com.tennis.matching.domain.member.entity.Member;
 import lombok.Builder;
@@ -19,7 +17,7 @@ public class MemberResponse {
     private String nickname;
     private String gender;
     private boolean activated;  // 활성화 여부
-    Set<Authority> authorities; // 권한
+    private Set<Authority> authorities; // 권한
 
     @Builder
     public MemberResponse(Long id,
