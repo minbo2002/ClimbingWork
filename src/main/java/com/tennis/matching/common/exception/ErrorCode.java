@@ -17,6 +17,7 @@ public enum ErrorCode {
 
     // member
     NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
+    NOT_MATCH_MEMBER(HttpStatus.BAD_REQUEST, "유저가 일치하지 않습니다."),
 
     // review
     NOT_FOUND_REVIEW(HttpStatus.NOT_FOUND, "해당 리뷰를 찾을 수 없습니다"),
