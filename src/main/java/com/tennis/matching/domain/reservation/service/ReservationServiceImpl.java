@@ -93,6 +93,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private void validateApplyMatch(Match match, Member member) {
         log.info("ReservationServiceImpl validateApplyMatch() run");
+
         if (!match.getMatchGender().equals(MatchGender.valueOf(member.getGender().toUpperCase()))
                 && !match.getMatchGender().equals(MatchGender.ALL)) {
             log.error("difference gender error matchGender: {}, memberGender: {}", match.getMatchGender(), member.getGender());
