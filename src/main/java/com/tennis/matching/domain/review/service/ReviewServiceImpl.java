@@ -30,14 +30,15 @@ public class ReviewServiceImpl implements ReviewService{
     // 리뷰 생성
     @Transactional
     @Override
-    public ReviewResponse createReview(String username, ReviewCreateRequest reviewRequest) {
+    public ReviewResponse createReview(String username, Long matchId, ReviewCreateRequest reviewRequest) {
         log.info("ReviewServiceImpl createReview() run");
 
         Member member = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
 
-        Review review = mapToEntity(member, reviewRequest);
+        Review review = mapToEntity(member, matchId, reviewRequest);
         Review saveReview = reviewRepository.save(review);
+
         ReviewResponse reviewResponse = ReviewResponse.mapToDto(saveReview);
         log.info("create review: {}", reviewResponse);
 
@@ -81,14 +82,16 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.delete(review);
     }
 
-    private Review mapToEntity(Member member, ReviewCreateRequest reviewRequest) {
+    private Review mapToEntity(Member member, Long matchId, ReviewCreateRequest reviewRequest) {
 
-        Match match = findMatch(reviewRequest.getMatchId());
+        Match match = findMatch(matchId);
 
         return Review.builder()
+                .writer(member.getUsername())
+                .score(reviewRequest.getScore())
+                .content(reviewRequest.getContent())
                 .member(member)
                 .match(match)
-                .content(reviewRequest.getContent())
                 .build();
     }
 

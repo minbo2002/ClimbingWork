@@ -20,14 +20,16 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     // 리뷰 생성
-    @PostMapping("/reviews")
+    @PostMapping("/reviews/{matchId}")
     public ResponseEntity<ReviewResponse> createReview(@AuthenticationPrincipal User principal,
-                                                       @RequestBody @Valid ReviewCreateRequest requestCreateRequest) {
+                                                       @RequestBody @Valid ReviewCreateRequest requestCreateRequest,
+                                                       @PathVariable Long matchId) {
         log.info("ReviewController createReview() run");
         log.info("principal: {} ", principal);
         log.info("username: {} ", principal.getUsername());
+        log.info("matchId: {} ", matchId);
 
-        ReviewResponse review = reviewService.createReview(principal.getUsername(), requestCreateRequest);
+        ReviewResponse review = reviewService.createReview(principal.getUsername(), matchId, requestCreateRequest);
 
         return new ResponseEntity<>(review, HttpStatus.CREATED);
     }

@@ -21,6 +21,10 @@ public class Review extends BaseTimeEntity {
     @Column(name = "review_id")
     private Long id;
 
+    private String writer;
+
+    private Integer score;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -33,8 +37,10 @@ public class Review extends BaseTimeEntity {
     private String content;
 
     @Builder
-    public Review(Long id, Member member, Match match, String content) {
+    public Review(Long id, String writer, Integer score, Member member, Match match, String content) {
         this.id = id;
+        this.writer = writer;
+        this.score = score;
         this.member = member;
         this.match = match;
         this.content = content;

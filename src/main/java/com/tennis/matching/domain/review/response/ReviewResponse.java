@@ -10,14 +10,16 @@ import lombok.NoArgsConstructor;
 public class ReviewResponse {
 
     private Long id;
-    private String memberName;
+    private String writer;
+    private Integer score;
     private Long matchId;
     private String content;
 
     @Builder
-    public ReviewResponse(Long id, String memberName, Long matchId, String content) {
+    public ReviewResponse(Long id, String writer, Integer score, Long matchId, String content) {
         this.id = id;
-        this.memberName = memberName;
+        this.writer = writer;
+        this.score = score;
         this.matchId = matchId;
         this.content = content;
     }
@@ -26,7 +28,8 @@ public class ReviewResponse {
 
         return ReviewResponse.builder()
                 .id(review.getId())
-                .memberName(review.getMember().getUsername())
+                .writer(review.getMember().getUsername())
+                .score(review.getScore())
                 .matchId(review.getMatch().getId())
                 .content(review.getContent())
                 .build();

@@ -7,7 +7,7 @@ import java.util.List;
 public interface ReviewService {
 
     // 리뷰 생성
-    ReviewResponse createReview(String username, ReviewCreateRequest reviewRequest);
+    ReviewResponse createReview(String username, Long matchId, ReviewCreateRequest reviewRequest);
 
     // 리뷰 리스트
     List<ReviewResponse> getReviewList();
