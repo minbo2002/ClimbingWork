@@ -25,14 +25,17 @@ public class LikeServiceImpl implements LikeService {
     private final MemberRepository memberRepository;
 
     @Override
-    public void addLike(Long userId, Long stadiumId) {
+    public void addLike(String username, Long stadiumId) {
         log.info("like service add like run...");
+
         Stadium stadium = stadiumRepository.findById(stadiumId)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_STADIUM));
-        Member member = memberRepository.findById(userId)
+
+        Member member = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
 
-        Optional<Like> likeOptional = likeRepository.findByMemberAndStadium(userId, stadiumId);
+        Optional<Like> likeOptional = likeRepository.findByMemberAndStadium(member.getId(), stadiumId);
+
         if (likeOptional.isPresent()) {
             likeRepository.delete(likeOptional.get());
         } else {

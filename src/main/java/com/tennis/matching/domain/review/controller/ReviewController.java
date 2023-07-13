@@ -25,7 +25,7 @@ public class ReviewController {
                                                        @RequestBody @Valid ReviewCreateRequest requestCreateRequest) {
         log.info("ReviewController createReview() run");
         log.info("principal: {} ", principal);
-        log.info("member: {} ", principal.getUsername());
+        log.info("username: {} ", principal.getUsername());
 
         ReviewResponse review = reviewService.createReview(principal.getUsername(), requestCreateRequest);
 
