@@ -21,8 +21,10 @@ public class Review extends BaseTimeEntity {
     @Column(name = "review_id")
     private Long id;
 
+    @Column(name = "writer", length = 30)
     private String writer;
 
+    @Column(name = "score", length = 2)
     private Integer score;
 
     @ManyToOne(fetch = FetchType.LAZY)

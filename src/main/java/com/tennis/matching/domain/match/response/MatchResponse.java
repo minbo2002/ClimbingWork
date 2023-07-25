@@ -19,6 +19,7 @@ public class MatchResponse {
     private String matchGender;
     private String content;
     private LocalDateTime startAt;
+    private LocalDateTime endAt;
 
     @Builder
     public MatchResponse(
@@ -29,7 +30,8 @@ public class MatchResponse {
                          String status,
                          String matchGender,
                          String content,
-                         LocalDateTime startAt
+                         LocalDateTime startAt,
+                         LocalDateTime endAt
                         ) {
 
         this.createId = createId;
@@ -40,6 +42,7 @@ public class MatchResponse {
         this.matchGender = matchGender;
         this.content = content;
         this.startAt = startAt;
+        this.endAt = endAt;
     }
 
     static public MatchResponse mapToDto(Match match) {
@@ -53,6 +56,7 @@ public class MatchResponse {
                     .matchGender(match.getMatchGender().toString())
                     .content(match.getContent())
                     .startAt(match.getStartAt())
+                    .endAt(match.getEndAt())
                     .build();
     }
 }

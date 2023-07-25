@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -36,10 +37,12 @@ public class ReviewController {
 
     // 리뷰 리스트
     @GetMapping("/reviews")
-    public ResponseEntity<?> getReviewList() {
+    public ResponseEntity<ReviewResponse> getReviewList() {
         log.info("ReviewController getReviewList() run");
 
-        return new ResponseEntity<>(reviewService.getReviewList(), HttpStatus.OK);
+        List<ReviewResponse> reviewList = reviewService.getReviewList();
+
+        return new ResponseEntity(reviewList, HttpStatus.OK);
     }
 
     // 리뷰 상세

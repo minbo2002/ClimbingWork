@@ -89,6 +89,7 @@ public class MatchServiceImpl implements MatchService {
                 .matchGender(MatchGender.valueOf(matchCreateRequest.getMatchGender().toUpperCase()))
                 .content(matchCreateRequest.getContent())
                 .startAt(matchCreateRequest.getStartAt())
+                .endAt(matchCreateRequest.getEndAt())
                 .matchDay(matchCreateRequest.getStartAt().getDayOfYear())
                 .build();
     }

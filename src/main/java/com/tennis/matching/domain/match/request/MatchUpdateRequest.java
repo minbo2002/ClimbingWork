@@ -26,22 +26,28 @@ public class MatchUpdateRequest {
     private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @NotNull(message = "경기 일정을 입력하세요")
+    @NotNull(message = "경기 시작 날짜 및 시간을 입력하세요")
     private LocalDateTime startAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @NotNull(message = "경기 종료 날짜 및 시간을 입력하세요")
+    private LocalDateTime endAt;
 
     @Builder
     public MatchUpdateRequest(
-            Long stadiumId,
-            Integer matchNum,
-            String matchGender,
-            String content,
-            LocalDateTime startAt
-    ) {
+                              Long stadiumId,
+                              Integer matchNum,
+                              String matchGender,
+                              String content,
+                              LocalDateTime startAt,
+                              LocalDateTime endAt
+                             ) {
 
         this.stadiumId = stadiumId;
         this.matchNum = matchNum;
         this.matchGender = matchGender;
         this.content = content;
         this.startAt = startAt;
+        this.endAt = endAt;
     }
 }

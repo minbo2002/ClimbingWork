@@ -20,7 +20,14 @@ public class MatchSearchRequest {
     private String stadiumName;
 
     @Builder
-    public MatchSearchRequest(LocalDate matchDay, String gender, String matchStatus, Integer personnel, String stadiumName) {
+    public MatchSearchRequest(
+                              LocalDate matchDay,
+                              String gender,
+                              String matchStatus,
+                              Integer personnel,
+                              String stadiumName
+                             ) {
+
         this.matchDay = matchDay;
         this.gender = gender;
         this.matchStatus = matchStatus;

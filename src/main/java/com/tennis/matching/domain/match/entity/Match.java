@@ -1,6 +1,5 @@
 package com.tennis.matching.domain.match.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tennis.matching.domain.reservation.entity.Reservation;
 import com.tennis.matching.domain.base.BaseTimeEntity;
 import com.tennis.matching.domain.match.request.MatchUpdateRequest;
@@ -44,8 +43,9 @@ public class Match extends BaseTimeEntity {
     @Lob
     private String content;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startAt;
+
+    private LocalDateTime endAt;
 
     private Integer matchDay;
 
@@ -56,7 +56,7 @@ public class Match extends BaseTimeEntity {
     private List<Review> reviews;
 
     @Builder
-    public Match(Long id, Stadium stadium, Integer matchNum, Integer applicantNum, MatchStatus status, MatchGender matchGender, String content, LocalDateTime startAt, Integer matchDay) {
+    public Match(Long id, Stadium stadium, Integer matchNum, Integer applicantNum, MatchStatus status, MatchGender matchGender, String content, LocalDateTime startAt, LocalDateTime endAt, Integer matchDay) {
         this.id = id;
         this.stadium = stadium;
         this.matchNum = matchNum;
@@ -65,6 +65,7 @@ public class Match extends BaseTimeEntity {
         this.matchGender = matchGender;
         this.content = content;
         this.startAt = startAt;
+        this.endAt = endAt;
         this.matchDay = matchDay;
     }
 
@@ -74,6 +75,7 @@ public class Match extends BaseTimeEntity {
         this.matchGender = MatchGender.valueOf(matchUpdateRequest.getMatchGender().toUpperCase());
         this.content = matchUpdateRequest.getContent();
         this.startAt = matchUpdateRequest.getStartAt();
+        this.endAt = matchUpdateRequest.getEndAt();
     }
 
     public void increaseApplicantNum() {
