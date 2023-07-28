@@ -25,7 +25,7 @@ public class MemberResponse {
                           String password,
                           String nickname,
                           String gender,
-                          boolean activated,
+                          Boolean activated,
                           Set<Authority> authorities) {
         this.id = id;
         this.username = username;

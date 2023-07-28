@@ -21,23 +21,25 @@ public class Match extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "match_id")
+    @Column(name = "match_id", length = 20)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stadium_id", nullable = false)
     private Stadium stadium;
 
-    @Column(name = "match_num")
+    @Column(name = "match_num", length = 2)
     private Integer matchNum; // 경기인원(2, 4 선택)
 
-    @Column(name = "applicant_num")
+    @Column(name = "applicant_num", length = 10)
     private Integer applicantNum;  // 신청인원(default 0)
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 10)
     private MatchStatus status; // OPEN, CLOSE(default OPEN)
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "match_gender", length = 10)
     private MatchGender matchGender; // MALE, FEMALE, ALL
 
     @Lob
@@ -47,6 +49,7 @@ public class Match extends BaseTimeEntity {
 
     private LocalDateTime endAt;
 
+    @Column(name = "match_day", length = 10)
     private Integer matchDay;
 
     @OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -47,10 +47,25 @@ public class StadiumResponse {
                 .createId(stadium.getId())
                 .name(stadium.getName())
                 .content(stadium.getContent())
+                .likeCount((long) stadium.getLikes().size())
                 .parking(stadium.getParking())
                 .rental(stadium.getRental())
                 .address(stadium.getAddress())
-                .likeCount((long) stadium.getLikes().size())
+                .singleUrl(stadium.getSingleUrl())
+                .multiUrl(stadium.getMultiUrl())
+                .build();
+    }
+
+    static public StadiumResponse createMapToDto(Stadium stadium) {  // static == static protected (암묵적)
+
+        return StadiumResponse.builder()
+                .createId(stadium.getId())
+                .name(stadium.getName())
+                .content(stadium.getContent())
+                .likeCount(stadium.getLikeCount())
+                .parking(stadium.getParking())
+                .rental(stadium.getRental())
+                .address(stadium.getAddress())
                 .singleUrl(stadium.getSingleUrl())
                 .multiUrl(stadium.getMultiUrl())
                 .build();

@@ -18,7 +18,7 @@ public class Review extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
+    @Column(name = "review_id", length = 20)
     private Long id;
 
     @Column(name = "writer", length = 30)

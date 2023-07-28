@@ -20,7 +20,7 @@ public class Member {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+    @Column(name = "member_id", length = 20)
     private Long id;
 
     @JsonIgnore
@@ -39,7 +39,7 @@ public class Member {
     private String gender;
 
     @JsonIgnore
-    @Column(name = "activated", length = 50)
+    @Column(name = "activated")
     private boolean activated; // 활성화 여부
 
     @ManyToMany

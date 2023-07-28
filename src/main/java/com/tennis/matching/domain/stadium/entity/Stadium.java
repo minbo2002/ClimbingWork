@@ -19,18 +19,25 @@ public class Stadium extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="stadium_id")
+    @Column(name ="stadium_id", length = 20)
     private Long id;
 
+    @Column(name ="name", length = 50)
     private String name;
 
     @Lob
     private String content;
 
+    @Column(name = "like_count", length = 20)
+    private Long likeCount;
+
+    @Column(name = "parking")
     private Boolean parking;
 
+    @Column(name = "rental")
     private Boolean rental;
 
+    @Column(name = "address", length = 100)
     private String address;
 
     @Column(name ="single_url", length = 200)
@@ -49,6 +56,7 @@ public class Stadium extends BaseTimeEntity {
     public Stadium(Long id,
                    String name,
                    String content,
+                   Long likeCount,
                    Boolean parking,
                    Boolean rental,
                    String address,
@@ -57,6 +65,7 @@ public class Stadium extends BaseTimeEntity {
         this.id = id;
         this.name = name;
         this.content = content;
+        this.likeCount = likeCount;
         this.parking = parking;
         this.rental = rental;
         this.address = address;

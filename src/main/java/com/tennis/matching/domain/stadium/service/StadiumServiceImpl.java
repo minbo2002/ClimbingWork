@@ -32,8 +32,9 @@ public class StadiumServiceImpl implements StadiumService {
         log.info("createStadium() run");
 
         Stadium stadium = mapToEntity(stadiumCreateRequest);
+        log.info("stadium: {}", stadium);
         Stadium saveStadium = stadiumRepository.save(stadium);
-        StadiumResponse stadiumResponse = StadiumResponse.mapToDto(saveStadium);
+        StadiumResponse stadiumResponse = StadiumResponse.createMapToDto(saveStadium);
         log.info("create stadiumCreateResponse: {}", stadiumResponse);
 
         return stadiumResponse;
@@ -85,6 +86,7 @@ public class StadiumServiceImpl implements StadiumService {
         return Stadium.builder()
                 .name(stadiumCreateRequest.getName())
                 .content(stadiumCreateRequest.getContent())
+                .likeCount(0L)
                 .parking(stadiumCreateRequest.getParking())
                 .rental(stadiumCreateRequest.getRental())
                 .address(stadiumCreateRequest.getAddress())

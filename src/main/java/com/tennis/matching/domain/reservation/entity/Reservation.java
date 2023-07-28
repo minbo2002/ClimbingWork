@@ -16,7 +16,7 @@ public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservation_id")
+    @Column(name = "reservation_id", length = 20)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

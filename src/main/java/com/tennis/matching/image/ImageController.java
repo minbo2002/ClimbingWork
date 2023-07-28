@@ -1,4 +1,4 @@
-package com.tennis.matching.test;
+package com.tennis.matching.image;
 
 import com.tennis.matching.util.image.AwsS3Util;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/test")
 @RequiredArgsConstructor
-public class TestController {
+public class ImageController {
 
     private final AwsS3Util awsS3Util;
 
