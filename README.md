@@ -10,13 +10,13 @@
 <br>
 
 ## 📌 서비스 MVP(Minimun Valuable Product)
-1. 관리자가 클라이밍장 등록/수정/삭제
+1. 관리자가 클라이밍장 등록/읽기/수정/삭제 (이미지 등록 가능)
 
 2. 관리자가 클라이밍장 선택 및 특정 시간대 매칭 등록/수정/삭제
 
-3. 사용자가 특정 클라이밍장의 특정 시간대 매칭 예약 (모집인원이 충족되었을때 예약 불가)
+3. 사용자가 특정 클라이밍장의 특정 시간대 매칭 예약 (모집인원이 충족되거나 경기시작시간 이후에 예약 불가) 및 취소 가능
 
-4. 사용자가 예약한 매칭 조회
+4. 사용자가 자신이 예약한 매칭 조회
 
 <br>
 
@@ -62,26 +62,21 @@
 <br>
 
 ## ⚙️ 시스템 아키텍처
-![image](https://github.com/minbo2002/TennisWork/assets/68101836/add9c675-a9df-4575-a722-079dea9537c2)
+![image](https://github.com/minbo2002/ClimbingWork/assets/68101836/4c2880c0-bfa5-4e97-8013-11c083a43b1a)
 
 <br>
 
 ## 👁‍🗨 이슈정리
 - 유저들의 중복예약요청 및 동시성 제어는 어떻게 해야하는가?
-- 팀을 이루어 프로젝트 진행시 Git flow를 어떻게 사용해야 하는가?
+- 팀을 이루어 프로젝트 진행시 Git 브랜치 전략을 어떻게 수립해야 하는가?
+- JMeter를 이용한 성능테스트
 
 <br>
 
-## 💾 ER 다이어그램
-![ERD 구조](https://user-images.githubusercontent.com/68101836/234907996-e7c4e7dd-3b24-4aac-bab1-875cb18eb846.png)
+## 💾 DB 명세서
+![2023-07-28 ERD구조](https://github.com/minbo2002/ClimbingWork/assets/68101836/1ec1b0ca-9fe5-4979-a6d0-0772854cc35a)
 
 <br>
 
-## 🛠 기획 및 설계
-
-### [기능 명세서]
-
-### [DB 명세서]
-
-### [API 문서]
+## 🛠 API 문서
 https://documenter.getpostman.com/view/15520411/2s93m62hvR
