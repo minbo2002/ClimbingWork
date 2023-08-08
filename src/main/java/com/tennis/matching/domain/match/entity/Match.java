@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -77,8 +78,10 @@ public class Match extends BaseTimeEntity {
         this.matchNum = matchUpdateRequest.getMatchNum();
         this.matchGender = MatchGender.valueOf(matchUpdateRequest.getMatchGender().toUpperCase());
         this.content = matchUpdateRequest.getContent();
-        this.startAt = matchUpdateRequest.getStartAt();
-        this.endAt = matchUpdateRequest.getEndAt();
+        //this.startAt = matchUpdateRequest.getStartAt();
+        //this.endAt = matchUpdateRequest.getEndAt();
+        this.startAt = LocalDateTime.of(matchUpdateRequest.getStartAt(), LocalTime.now());
+        this.endAt = LocalDateTime.of(matchUpdateRequest.getEndAt(), LocalTime.now());
     }
 
     public void increaseApplicantNum() {
