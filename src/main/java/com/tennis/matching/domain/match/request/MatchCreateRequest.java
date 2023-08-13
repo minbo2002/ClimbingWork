@@ -1,10 +1,12 @@
 package com.tennis.matching.domain.match.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -22,13 +24,13 @@ public class MatchCreateRequest {
     @NotBlank(message = "안내사항을 입력하세요")
     private String content;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "경기 시작 날짜 및 시간을 입력하세요")
-    private LocalDateTime startAt;
+    private LocalDate startAt;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "경기 종료 날짜 및 시간을 입력하세요")
-    private LocalDateTime endAt;
+    private LocalDate endAt;
 
     @Builder
     public MatchCreateRequest(
@@ -36,8 +38,8 @@ public class MatchCreateRequest {
                               Integer matchNum,
                               String matchGender,
                               String content,
-                              LocalDateTime startAt,
-                              LocalDateTime endAt
+                              LocalDate startAt,
+                              LocalDate endAt
                              ) {
 
         this.stadiumId = stadiumId;

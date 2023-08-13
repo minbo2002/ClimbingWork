@@ -19,6 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -88,8 +91,10 @@ public class MatchServiceImpl implements MatchService {
                 .status(MatchStatus.OPEN)
                 .matchGender(MatchGender.valueOf(matchCreateRequest.getMatchGender().toUpperCase()))
                 .content(matchCreateRequest.getContent())
-                .startAt(matchCreateRequest.getStartAt())
-                .endAt(matchCreateRequest.getEndAt())
+                //.startAt(matchCreateRequest.getStartAt())
+                .startAt(LocalDateTime.of(matchCreateRequest.getStartAt(), LocalTime.now()))
+                //.endAt(matchCreateRequest.getEndAt())
+                .endAt(LocalDateTime.of(matchCreateRequest.getEndAt(), LocalTime.now()))
                 .matchDay(matchCreateRequest.getStartAt().getDayOfYear())
                 .build();
     }
