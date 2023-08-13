@@ -1,5 +1,6 @@
 package com.tennis.matching.domain.match.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tennis.matching.domain.match.entity.Match;
 import com.tennis.matching.domain.stadium.response.StadiumResponse;
 import lombok.Builder;
@@ -18,7 +19,11 @@ public class MatchResponse {
     private String status;
     private String matchGender;
     private String content;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endAt;
 
     @Builder
