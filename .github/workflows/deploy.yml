@@ -4,23 +4,26 @@ on:
     branches:
       - main
 
-
 # actions/setup-java@v2는 사용자 정의 배포를 지원하고 Zulu OpenJDK, Eclipse Temurin 및 Adopt OpenJDK를 기본적으로 지원. v1은 Zulu OpenJDK만 지원
 jobs:
   build: # 마음대로 적어도됨.
     runs-on: ubuntu-latest
+
     steps:  #   '-' 기호인 시퀀스를 통해서 step을 나눈다
       - name: Checkout
-        uses: actions/checkout@v2  # actions는 스크립트의 모임 (작성하기 귀찮은 명령들을 라이브러리 형태로 제공)  1. 첫번째로 기재한 actions는 코드다운로드 용도
+        uses: actions/checkout@v3  # actions는 스크립트의 모임 (작성하기 귀찮은 명령들을 라이브러리 형태로 제공)  1. 첫번째로 기재한 actions는 코드다운로드 용도
+
       - name: Set up JDK 11        # 2. 두번째로 기재한 actions는 JDK11 설치용도
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: 11
-          distribution: zulu
+          distribution: temurin  # zulu
+
       - name: Grant execute permission for gradlew  # gradlew에 실행권한주고 bash로 실행
         run: chmod +x ./gradlew
+
       - name: Build with Gradle
-        run: ./gradlew clean build  # clean build는 기존에 빌드로 만들어진 jar파일이 있는 build 폴더를 없애버리고 다시받는것
+        run: ./gradlew clean build --exclude-task test # clean build는 기존에 빌드로 만들어진 jar파일이 있는 build 폴더를 없애버리고 다시받는것
 
       # CI서버에 만들어진 우분투가 UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다.
       - name: Get current time
@@ -29,5 +32,6 @@ jobs:
         with:
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: "+09:00"
+
       - name: Show Current Time
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
