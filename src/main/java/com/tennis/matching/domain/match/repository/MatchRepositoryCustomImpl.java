@@ -11,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.util.CollectionUtils;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import static com.tennis.matching.domain.match.entity.QMatch.match;
 
@@ -23,6 +26,38 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
     @Override
     public Page<Match> findList(Pageable pageable, MatchSearchRequest searchRequest) {
 
+        // MySQL 커버링 인덱스 적용
+        List<Long> ids = queryFactory
+                .select(match.id)
+                .from(match)
+                .where(eqStartAt(searchRequest.getMatchDay()),
+                        eqGender(searchRequest.getGender()),
+                        eqStatus(searchRequest.getMatchStatus()),
+                        eqPersonnel(searchRequest.getPersonnel()),
+                        eqStadiumName(searchRequest.getStadiumName()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        if (CollectionUtils.isEmpty(ids)) {
+            return Page.empty();
+        }
+
+        List<Match> matchList = queryFactory
+                .selectFrom(match)
+                .where(match.id.in(ids))
+                .orderBy(match.startAt.asc())
+                .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory
+                .select(match.count())
+                .from(match)
+                .where(match.id.in(ids));
+
+        return PageableExecutionUtils.getPage(matchList, pageable, countQuery::fetchOne);
+
+        // MySQL 커버링 인덱스 미적용
+        /*
         List<Match> matchList = queryFactory
                 .selectFrom(match)
                 .where(eqStartAt(searchRequest.getMatchDay()),
@@ -45,6 +80,7 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
                        eqStadiumName(searchRequest.getStadiumName()));
 
         return PageableExecutionUtils.getPage(matchList, pageable, countQuery::fetchOne);
+        */
     }
 
     private BooleanExpression eqStadiumName(String stadiumName) {
