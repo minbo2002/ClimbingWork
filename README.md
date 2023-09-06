@@ -60,7 +60,7 @@
   
 - 매치 조회 성능을 높이는 방법은 무엇일까? --> https://velog.io/@minbo2002/coveringIndex
   
-- 팀을 이루어 프로젝트 진행시 Git 브랜치 전략을 어떻게 수립해야 할까?
+- 팀을 이루어 프로젝트 진행시 Git 브랜치 전략을 어떻게 수립해야 할까? --> https://velog.io/@minbo2002/git-flow
   
 - JMeter를 이용한 성능 테스트
 
