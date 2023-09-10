@@ -34,7 +34,8 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationResponse createReservation(Long matchId, String username) {
         log.info("ReservationServiceImpl createReservation() run");
 
-        Match match = findMatch(matchId);
+        Match match = matchRepository.findByIdForCreate(matchId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MATCH));
 
         Member member = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
