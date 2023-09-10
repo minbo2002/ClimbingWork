@@ -56,11 +56,14 @@
 <br>
 
 ## 👁‍🗨 이슈정리
-- 유저들의 중복 예약 요청시 동시성 문제는 어떻게 해야 할까?  --> https://velog.io/@minbo2002/concurrency-control
+- 유저들의 중복 예약 요청시 동시성 문제는 어떻게 해야 할까? <br/>
+  --> https://velog.io/@minbo2002/concurrency-control
   
-- 매치 조회 성능을 높이는 방법은 무엇일까? --> https://velog.io/@minbo2002/coveringIndex
+- 매치 조회 성능을 높이는 방법은 무엇일까? <br/>
+  --> https://velog.io/@minbo2002/coveringIndex
   
-- 팀을 이루어 프로젝트 진행시 Git 브랜치 전략을 어떻게 수립해야 할까? --> https://velog.io/@minbo2002/git-flow
+- 팀을 이루어 프로젝트 진행시 Git 브랜치 전략을 어떻게 수립해야 할까? <br/>
+  --> https://velog.io/@minbo2002/git-flow
   
 - JMeter를 이용한 성능 테스트
 
