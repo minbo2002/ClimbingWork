@@ -8,13 +8,16 @@ import com.tennis.matching.domain.match.entity.MatchGender;
 import com.tennis.matching.domain.match.entity.MatchStatus;
 import com.tennis.matching.domain.match.request.MatchSearchRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.util.CollectionUtils;
 import java.time.LocalDate;
 import java.util.List;
 import static com.tennis.matching.domain.match.entity.QMatch.match;
 
+@Slf4j
 @RequiredArgsConstructor
 public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
 
@@ -23,26 +26,35 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
     @Override
     public Page<Match> findList(Pageable pageable, MatchSearchRequest searchRequest) {
 
-        List<Match> matchList = queryFactory
-                .selectFrom(match)
+        // MySQL 커버링 인덱스 적용
+        List<Long> ids = queryFactory
+                .select(match.id)
+                .from(match)
                 .where(eqStartAt(searchRequest.getMatchDay()),
-                       eqGender(searchRequest.getGender()),
-                       eqStatus(searchRequest.getMatchStatus()),
-                       eqPersonnel(searchRequest.getPersonnel()),
-                       eqStadiumName(searchRequest.getStadiumName()))
+                        eqGender(searchRequest.getGender()),
+                        eqStatus(searchRequest.getMatchStatus()),
+                        eqPersonnel(searchRequest.getPersonnel()),
+                        eqStadiumName(searchRequest.getStadiumName()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .fetch();
+
+        log.info("ids: {}", ids);
+
+        if (CollectionUtils.isEmpty(ids)) {
+            return Page.empty();
+        }
+
+        List<Match> matchList = queryFactory
+                .selectFrom(match)
+                .where(match.id.in(ids))
                 .orderBy(match.startAt.asc())
                 .fetch();
 
         JPAQuery<Long> countQuery = queryFactory
                 .select(match.count())
                 .from(match)
-                .where(eqStartAt(searchRequest.getMatchDay()),
-                       eqGender(searchRequest.getGender()),
-                       eqStatus(searchRequest.getMatchStatus()),
-                       eqPersonnel(searchRequest.getPersonnel()),
-                       eqStadiumName(searchRequest.getStadiumName()));
+                .where(match.id.in(ids));
 
         return PageableExecutionUtils.getPage(matchList, pageable, countQuery::fetchOne);
     }
