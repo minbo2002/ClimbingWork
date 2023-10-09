@@ -1,9 +1,13 @@
 package com.tennis.matching.config;
 
-import com.tennis.matching.common.jwt.*;
+import com.tennis.matching.common.jwt.JwtAccessDeniedHandler;
+import com.tennis.matching.common.jwt.JwtAuthenticationEntryPoint;
+import com.tennis.matching.common.jwt.JwtSecurityConfig;
+import com.tennis.matching.common.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,7 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
@@ -50,11 +53,12 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/auth/login").permitAll()  // 로그인 api는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll() 설정
                 .antMatchers("/member/signup").permitAll()   // 회원가입 api는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll() 설정
-                .antMatchers("/stadiums/**").permitAll()
-                .antMatchers("/like/**").permitAll()
-                .antMatchers("/matches/**").permitAll()
-                .antMatchers("/applications/**").permitAll()
-                .antMatchers("/reviews/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/matches/**").permitAll()
+                .antMatchers("/matches/**").hasRole("ADMIN")
+                .antMatchers("/stadiums/**").hasRole("ADMIN")
+                .antMatchers("/like/**").hasRole("USER")
+                .antMatchers("/reviews/**").hasRole("USER")
+                .antMatchers("/reservations/**").hasRole("USER")
                 .anyRequest().authenticated()
 
                 .and()

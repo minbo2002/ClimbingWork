@@ -2,15 +2,15 @@ package com.tennis.matching.domain.reservation.service;
 
 import com.tennis.matching.common.exception.CustomException;
 import com.tennis.matching.common.exception.ErrorCode;
-import com.tennis.matching.domain.reservation.entity.Reservation;
-import com.tennis.matching.domain.reservation.repository.ReservationRepository;
-import com.tennis.matching.domain.reservation.response.ReservationResponse;
 import com.tennis.matching.domain.match.entity.Match;
 import com.tennis.matching.domain.match.entity.MatchGender;
 import com.tennis.matching.domain.match.entity.MatchStatus;
 import com.tennis.matching.domain.match.repository.MatchRepository;
 import com.tennis.matching.domain.member.entity.Member;
 import com.tennis.matching.domain.member.repository.MemberRepository;
+import com.tennis.matching.domain.reservation.entity.Reservation;
+import com.tennis.matching.domain.reservation.repository.ReservationRepository;
+import com.tennis.matching.domain.reservation.response.ReservationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -60,12 +60,12 @@ public class ReservationServiceImpl implements ReservationService {
     // reservation 취소
     @Transactional
     @Override
-    public ReservationResponse cancelReservation(Long matchId, Member member) {
+    public ReservationResponse cancelReservation(Long matchId, String username) {
         log.info("ReservationServiceImpl cancelReservation() run");
 
         Match match = findMatch(matchId);
 
-        Reservation reservation = reservationRepository.findByMemberIdAndMatchId(member.getId(), matchId);
+        Reservation reservation = reservationRepository.findByMemberIdAndMatchId(username, matchId);
 
         reservationRepository.delete(reservation);
 

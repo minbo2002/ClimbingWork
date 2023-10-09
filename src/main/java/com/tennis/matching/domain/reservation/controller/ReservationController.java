@@ -2,7 +2,6 @@ package com.tennis.matching.domain.reservation.controller;
 
 import com.tennis.matching.domain.reservation.response.ReservationResponse;
 import com.tennis.matching.domain.reservation.service.ReservationService;
-import com.tennis.matching.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,7 +25,7 @@ public class ReservationController {
 
         log.info("ApplicationController createApplication() run");
         log.info("principal: {} ", principal);
-        log.info("member: {} ", principal.getUsername());
+        log.info("username: {} ", principal.getUsername());
 
         return reservationService.createReservation(matchId, principal.getUsername());
     }
@@ -34,10 +33,12 @@ public class ReservationController {
     // 예약 삭제
     @DeleteMapping("/reservations/{matchId}")
     public ReservationResponse cancelApplication(@PathVariable Long matchId,
-                                                 @AuthenticationPrincipal Member member) {
-        log.info("ApplicationController cancelApplication() run");
-        log.info("member: {} ", member);
+                                                 @AuthenticationPrincipal User principal) {
 
-        return reservationService.cancelReservation(matchId, member);
+        log.info("ApplicationController cancelApplication() run");
+        log.info("principal: {} ", principal);
+        log.info("username: {} ", principal.getUsername());
+
+        return reservationService.cancelReservation(matchId, principal.getUsername());
     }
 }

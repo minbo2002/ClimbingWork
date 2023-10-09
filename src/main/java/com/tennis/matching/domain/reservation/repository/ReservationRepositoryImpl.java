@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+
 import java.util.List;
 
-import static com.tennis.matching.domain.reservation.entity.QReservation.reservation;
 import static com.tennis.matching.domain.match.entity.QMatch.match;
+import static com.tennis.matching.domain.member.entity.QMember.member;
+import static com.tennis.matching.domain.reservation.entity.QReservation.reservation;
 import static com.tennis.matching.domain.stadium.entity.QStadium.stadium;
 
 @RequiredArgsConstructor
@@ -20,8 +22,13 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Reservation findByMemberIdAndMatchId(Long memberId, Long matchId) {
+    public Reservation findByMemberIdAndMatchId(String username, Long matchId) {
 
+        Long memberId = queryFactory
+                .select(member.id)
+                .from(member)
+                .where(member.username.eq(username))
+                .fetchOne();
 
         return queryFactory
                 .selectFrom(reservation)
@@ -62,5 +69,12 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom {
             return null;
         }
         return reservation.match.id.eq(matchId);
+    }
+
+    private BooleanExpression eqUserName(String username) {
+        if(username == null) {
+            return null;
+        }
+        return reservation.member.username.eq(username);
     }
 }

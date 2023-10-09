@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ReservationRepositoryCustom {
 
-    Reservation findByMemberIdAndMatchId(Long memberId, Long matchId);
+    Reservation findByMemberIdAndMatchId(String username, Long matchId);
 
     Page<Reservation> findListByMemberId(Pageable pageable, Long memberId);
 }

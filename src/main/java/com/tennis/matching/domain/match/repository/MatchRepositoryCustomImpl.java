@@ -26,7 +26,7 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
     @Override
     public Page<Match> findList(Pageable pageable, MatchSearchRequest searchRequest) {
 
-        // MySQL 커버링 인덱스 적용
+        // 커버링 인덱스로 PK인 id만 조회
         List<Long> ids = queryFactory
                 .select(match.id)
                 .from(match)
@@ -35,12 +35,16 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
                         eqStatus(searchRequest.getMatchStatus()),
                         eqPersonnel(searchRequest.getPersonnel()),
                         eqStadiumName(searchRequest.getStadiumName()))
-                .offset(pageable.getOffset())
+                .orderBy(match.id.desc())
                 .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
                 .fetch();
 
+        log.info("페이지 사이즈 : " + pageable.getPageSize());
+        log.info("페이지 오프셋 : " + pageable.getOffset());
         log.info("ids: {}", ids);
 
+        // 대상이 없을경우 추가 쿼리 수행할 필요 없이 바로 반환
         if (CollectionUtils.isEmpty(ids)) {
             return Page.empty();
         }
@@ -55,6 +59,7 @@ public class MatchRepositoryCustomImpl implements MatchRepositoryCustom{
                 .select(match.count())
                 .from(match)
                 .where(match.id.in(ids));
+        log.info("countQuery: {}", countQuery);
 
         return PageableExecutionUtils.getPage(matchList, pageable, countQuery::fetchOne);
     }
